@@ -1,0 +1,124 @@
+.div-content-home{
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+    gap: 8px;
+}
+
+.left-side-home{
+    display: flex;
+    justify-content: center;
+    width: 800px;
+}
+
+.right-side-home{
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    width: 390px;
+    padding-top: 20px;
+}
+
+.center-right-now{
+    width: 690px;
+    position: absolute;
+    padding-top: 190px;
+}
+
+.top-conetent-home{
+    display: flex;
+    height: 43px;
+    gap: 9px;
+    justify-content: center;
+}
+.button-6 {
+  align-items: center;
+  background-color: var(--background-color-white);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button-6:hover,
+.button-6:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #FE8CAD;
+  color: #FFFFFF;
+}
+
+.button-6.focused {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #FE8CAD;
+  color: #FFFFFF;
+}
+
+.button-6:hover {
+  transform: translateY(-1px);
+}
+
+.button-6:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}
+
+.button-6 img {
+  filter: grayscale(1) brightness(0.5);
+  transition: filter 0.3s;
+}
+
+.button-6:hover img {
+  filter: brightness(1) sepia(1) hue-rotate(20deg) saturate(5);
+}
+
+
+.icon-svg img{
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+.tab-content2{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  bottom: 110px;
+}
+
+.description-section-collection{
+  display: flex;
+  justify-content: center;
+  bottom: 89px;
+  position: relative;
+}
+
+.description-text{
+      color: #4a4a4a;
+    font-size: 24px;
+}

@@ -1,0 +1,25 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  color: rgb(74, 74, 74);
+  font-size: 14px;
+}
+
+
+body {
+  margin: 0;
+  height: 100%;
+}
+
+
+.background-postlist{
+   background-color: #fff;
+}
