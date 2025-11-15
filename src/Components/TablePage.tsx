@@ -559,8 +559,6 @@ const PopularArticles: React.FC<{ searchTerm: string }> = ({ searchTerm }) => {
   const userArticle = import.meta.env.VITE_USER_ARTICLES;
   const [loading, setLoading] = useState<boolean>(true);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const fetchPopularArticles = async () => {
       setLoading(true);
@@ -615,12 +613,7 @@ const PopularArticles: React.FC<{ searchTerm: string }> = ({ searchTerm }) => {
     fetchPopularArticles();
   }, [searchTerm]);
 
-  const cleanText = (html: string): string => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = html;
-    const text = tempDiv.textContent || tempDiv.innerText || "";
-    return text.replace(/\s+/g, " ").trim(); // collapse and trim whitespace
-  };
+
 
   const fetchArticlePreview = async (fileId: string): Promise<string> => {
     try {
@@ -661,25 +654,7 @@ const PopularArticles: React.FC<{ searchTerm: string }> = ({ searchTerm }) => {
     }
   };
 
-  const handleImageClick = (post: Post) => {
-    console.log("Post followId: ", post.followId);
-    navigate(`/Post/${post.$id}`, {
-      state: {
-        tags: post.tags ?? "",
-        userName: post.userName,
-        imageFileId: post.imageFileId,
-        userId: post.userId,
-        followId: post.followId,
-        description: post.description,
-        likeCount: post.likeCount,
-        imageId: post.imageId,
-        postedBy: post.postedBy,
-        createdAt: post.createdAt || post.$createdAt,
-        $createdAt: post.$createdAt, // Optional: to have access to both if needed
-        id: post.$id,
-      },
-    });
-  };
+
 
   if (loading) {
     return (
@@ -938,7 +913,6 @@ const Hearters: React.FC<{ searchTerm: string }> = ({ searchTerm }) => {
   const navigate = useNavigate();
 
   const databaseId = import.meta.env.VITE_DATABASE_ID;
-  const bucketId = import.meta.env.VITE_BUCKET_PFPBG;
   const userPostsCollect = import.meta.env.VITE_USER_POST_COLLECTION_ID;
   const userCollect = import.meta.env.VITE_USER_PREF_COLLECTION_ID;
 
