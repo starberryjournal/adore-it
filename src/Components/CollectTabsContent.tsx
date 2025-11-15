@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { account, databases, Query } from "../appwrite";
+import { databases, Query } from "../appwrite";
 import { useNavigate } from "react-router-dom";
 
 import FollowUserButton from "./FollowUserButton";
@@ -113,9 +113,6 @@ const CollectionImages: React.FC<{
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const user = await account.get();
-        const userId = user.$id;
-
         const [originalImages, savedImages] = await Promise.all([
           databases.listDocuments(databaseId, userPostId, [
             Query.equal("collectionId", collectionId),
@@ -171,6 +168,7 @@ const CollectionImages: React.FC<{
 
         setImages(enrichedWithProfile);
         setLoading(false);
+        setUserId;
       } catch (err) {
         console.error("Error loading images", err);
         setError("Failed to load images.");
@@ -464,7 +462,7 @@ const CollectionFollowers: React.FC<CollectionFollowersProps> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [collectionUserId, setCollectionUserId] = useState<string>("");
-  const [userProfile, setUserProfile] = useState<string | null>(null);
+  const [, setUserProfile] = useState<string | null>(null);
 
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const userFollowCollect = import.meta.env.VITE_USERFOLLOWCOLLECT;
