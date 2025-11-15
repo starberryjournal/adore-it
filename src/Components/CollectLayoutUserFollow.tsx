@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { account, databases, Query } from "../appwrite";
-import FollowCollectButton from "./FollowCollectButton";
 
 interface Picture {
   $id: string;
@@ -27,7 +26,7 @@ const CollectLayoutUserFollow: React.FC<Props> = ({
   followedCollections,
   handleFollow,
 }) => {
-  const { collectionId } = useParams<{ collectionId: string }>();
+  //const { collectionId } = useParams<{ collectionId: string }>();
   const navigate = useNavigate();
   const filteredImages = recentImages
     .filter((picture) => picture.collectionId === collection.$id)
@@ -40,8 +39,8 @@ const CollectLayoutUserFollow: React.FC<Props> = ({
 
   const [imageCount, setImageCount] = useState<number>(0);
   const [FollowCount, setFollowCount] = useState<number>(0);
-  const [currentUserId, setCurrentUserId] = useState("");
-  const [collectionUserId, setCollectionUserId] = useState("");
+  const [, setCurrentUserId] = useState("");
+ // const [collectionUserId, setCollectionUserId] = useState("");
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
