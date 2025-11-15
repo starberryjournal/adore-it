@@ -53,15 +53,11 @@ interface Post {
 const FollowCollect: React.FC = () => {
   const navigate = useNavigate();
   const [followedImages, setFollowedImages] = useState<AppImage[]>([]);
-  const [followedUsers, setFollowedUsers] = useState<AppImage[]>([]);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const { isNavigating, setIsNavigating } = useNavigation();
+  const { setIsNavigating } = useNavigation();
 
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [likedImages, setLikedImages] = useState<string[]>([]); // State for liked images
-  const [userCollections, setUserCollections] = useState<any[]>([]);
+
   const [userId, setUserId] = useState<string>(""); // State for userId
   const [userProfile, setUserProfile] = useState<any>(null);
   const databaseId = import.meta.env.VITE_DATABASE_ID;
@@ -69,8 +65,6 @@ const FollowCollect: React.FC = () => {
   const userPost = import.meta.env.VITE_USER_POST_COLLECTION_ID;
   const collectionId = import.meta.env.VITE_USER_PREF_COLLECTION_ID;
   const userCollection = import.meta.env.VITE_USER_COLLECTION;
-  const userLikes = import.meta.env.VITE_USERL_IKE;
-  const userFollowuser = import.meta.env.VITE_USERFOLLOWUSER;
 
   useEffect(() => {
     const fetchFollowedCollectionsAndImages = async () => {
@@ -177,14 +171,6 @@ const FollowCollect: React.FC = () => {
     fetchFollowedCollectionsAndImages();
   }, []);
 
-  const getFormattedDate = (createdAt?: string) => {
-    if (!createdAt) return "Unknown time";
-    try {
-      return format(new Date(createdAt), "MMMM d, yyyy 'at' h:mm a");
-    } catch {
-      return "Invalid date";
-    }
-  };
 
   const getRelativeTime = (dateString?: string) => {
     if (!dateString) return "Unknown time";
