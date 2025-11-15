@@ -12,19 +12,19 @@ const CollectTabs: React.FC<TabsProps> = ({
   handleTabClick,
   collectionId,
 }) => {
-  const [imageCount, setImageCount] = useState<number>(0);
-  const [collectionCount, setCollectionCount] = useState<number>(0);
-  const [likedImageCount, setLikedImageCount] = useState<number>(0);
-  const [error, setError] = useState<string | null>(null);
+ // const [imageCount, setImageCount] = useState<number>(0);
+  //const [collectionCount, setCollectionCount] = useState<number>(0);
+  //const [likedImageCount, setLikedImageCount] = useState<number>(0);
+  const [, setError] = useState<string | null>(null);
 
   const dbId = import.meta.env.VITE_DATABASE_ID;
   const postCollectionId = import.meta.env.VITE_COLLECT_OTHERIMG;
   const creatPost = import.meta.env.VITE_USER_POST_COLLECTION_ID;
   const followsCollectionId = import.meta.env.VITE_USERFOLLOWCOLLECT;
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [, setLoading] = useState<boolean>(true);
   const [images, setImages] = useState<any[]>([]);
-  const [userId, setUserId] = useState<string>(""); // State for userId
+  const [userId] = useState<string>(""); // State for userId
   const [followers, setFollowers] = useState<string[]>([]);
   useEffect(() => {
     if (!collectionId) {
@@ -112,3 +112,4 @@ const CollectTabs: React.FC<TabsProps> = ({
 };
 
 export default CollectTabs;
+
