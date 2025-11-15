@@ -20,7 +20,6 @@ interface LikeButtonProps {
 }
 
 const LikeButtonSmall: React.FC<LikeButtonProps> = ({
-  likedOwnerId,
   userName,
   displayName,
   imageFileId,
@@ -35,10 +34,10 @@ const LikeButtonSmall: React.FC<LikeButtonProps> = ({
   onLikeUpdate,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [animate, setAnimate] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+  const [, setAnimate] = useState(false);
+  const [, setShowAlert] = useState(false);
 
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const likeCollectionId = import.meta.env.VITE_USERL_IKE;
