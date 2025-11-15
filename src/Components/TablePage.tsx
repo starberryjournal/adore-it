@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { databases, Query, storage } from "../appwrite";
 import { Link, useNavigate } from "react-router-dom";
 
-import "../components/TablePage.css";
+import "../Components/TablePage.css";
 import ImageLayout from "./CollectFollowLayout";
 import FollowUserButton from "./FollowUserButton";
 import { format, formatDistanceToNow } from "date-fns";
