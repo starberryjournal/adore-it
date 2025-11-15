@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { account, storage } from "../appwrite";
+import { account } from "../appwrite";
 import "./SignInNav.css";
 import SearchBar from "./SearchBar";
 import NotificationsDropdown from "../Components/NotificationsDropdown";
@@ -204,12 +204,9 @@ export default function SignInNav() {
             <NavLink to="/Profile">
               {user.prefs.profilePictureId && (
                 <img
-                  src={storage.getFilePreview(
-                    import.meta.env.VITE_BUCKET_PFPBG,
-                    user.prefs.profilePictureId
-                  )}
-                  alt="Profile"
-                />
+                src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${user.prefs.profilePictureId}/view?project=67bc93bc0004228cf938`}
+                alt="Profile"
+              />
               )}
             </NavLink>
           </div>
@@ -221,5 +218,7 @@ export default function SignInNav() {
       </div>
     </div>
   );
+}
+
 }
 
