@@ -21,15 +21,14 @@ interface FollowUserButtonProps {
 
 const FollowUserButton: React.FC<FollowUserButtonProps> = ({
   followId,
-  userId,
   currentUser,
 }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [followUserIds, setFollowUserIds] = useState<string[]>([]);
-  const [userName, setUserName] = useState<string | null>(null);
-  const [displayName, setDisplayName] = useState<string>(""); // Added state for displayName
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [, setUserName] = useState<string | null>(null);
+  const [, setDisplayName] = useState<string>(""); // Added state for displayName
+  const [, setCurrentUserId] = useState<string | null>(null);
 
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const userFollowuser = import.meta.env.VITE_USERFOLLOWUSER;
