@@ -55,7 +55,7 @@ const LikeCollectShare: React.FC<LikendCollectProps> = ({
 }) => {
   const [liked, setLiked] = useState(false);
   const [collections, setCollections] = useState<any[]>([]);
-  const [loadingCollections, setLoadingCollections] = useState(false);
+  const [, setLoadingCollections] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(initialLikeCount || 0);
   const [showAlert, setShowAlert] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -138,9 +138,7 @@ const LikeCollectShare: React.FC<LikendCollectProps> = ({
     setLikeCount(newLikeCount);
   };
 
-  const openLightbox = () => {
-    setIsLightboxOpen(true);
-  };
+
 
   if (!image || !image.$id || !likedOwnerId || !currentUser || !postId)
     return null;
