@@ -11,11 +11,10 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = () => {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState<string>("");
+  const [, setUserName] = useState<string>("");
   const [activePage, setActivePage] = useState<number>(1);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  // Step 1: Set up state to manage the theme
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
 
   useEffect(() => {
     // Fetch user data when the component mounts (if already signed in)
@@ -40,13 +39,6 @@ const Home: React.FC<HomeProps> = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Step 2: Check localStorage for saved theme preference on component mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setIsDarkMode(true);
-    }
-  }, []);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -55,34 +47,11 @@ const Home: React.FC<HomeProps> = () => {
     setActivePage(pageNumber); // Set active page based on button clicked
   };
 
-  // Step 3: Toggle the theme and save preference to localStorage
-  const toggleTheme = () => {
-    setIsDarkMode((prevMode) => {
-      const newMode = !prevMode;
-      // Save the new theme in localStorage
-      localStorage.setItem("theme", newMode ? "dark" : "light");
-      return newMode;
-    });
-  };
 
-  // Step 4: Apply dark-mode class to .background-color based on state
-  useEffect(() => {
-    const backgroundElement = document.querySelector(".background-color");
-
-    if (backgroundElement) {
-      if (isDarkMode) {
-        backgroundElement.classList.add("dark-mode");
-      } else {
-        backgroundElement.classList.remove("dark-mode");
-      }
-    }
-  }, [isDarkMode]);
 
   return (
     <div className="background-color">
-      <button onClick={toggleTheme}>
-        {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-      </button>
+    
       <div className="div-content-home">
         <div className="left-side-home">
           {activePage === 1 && (
