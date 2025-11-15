@@ -153,7 +153,6 @@ const EditProfile: React.FC = () => {
     setCroppingType(null);
   };
 
-  const aspect = croppingType === "background" ? 16 / 9 : 1;
 
   return (
     <div className="container2">
@@ -303,3 +302,4 @@ const EditProfile: React.FC = () => {
 };
 
 export default EditProfile;
+
