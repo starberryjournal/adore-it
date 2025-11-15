@@ -52,3 +52,4 @@ export default tseslint.config({
 "# Adore-website" 
 "# Adore-website" 
 "# adore-it" 
+"# adore-it" 
