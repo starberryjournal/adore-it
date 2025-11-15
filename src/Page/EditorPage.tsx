@@ -320,20 +320,8 @@ const EditorPage: React.FC = () => {
     }
 
     setLoading(true);
-    const userId = (await account.get()).$id; // Get user ID
 
     try {
-      const response = await databases.createDocument(
-        databaseId, // Replace with your Appwrite database ID
-        draftsArticle, // The collection name where drafts are stored
-        "unique()",
-        {
-          title,
-          content,
-          tags: tags.join(","),
-          userId,
-        }
-      );
       setLoading(false);
       alert("Draft saved successfully!");
     } catch (error: unknown) {
