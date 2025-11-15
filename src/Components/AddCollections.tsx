@@ -31,18 +31,15 @@ const AddCollection: React.FC<AddToCollectionProps> = ({
   const [selectedCollection, setSelectedCollection] = useState<string>("");
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const addImageCollect = import.meta.env.VITE_USER_ADD_IMAGE_COLLECTION;
-  const CollectionUser = import.meta.env.VITE_USER_COLLECTION;
   const userPost = import.meta.env.VITE_USER_POST_COLLECTION_ID;
 
   const [recentImages, setRecentImages] = useState<any[]>([]);
   const [collections, setCollections] = useState<any[]>([]);
   const [, setUserId] = useState<string>(""); // State for userId
-  const [showAlert, setShowAlert] = useState(false);
-  const [collectionsWithImages, setCollectionsWithImages] =
-    useState(userCollections); // Store collections with images
+  const [, setShowAlert] = useState(false);
 
   const [, setError] = useState<string | null>(null);
-  const [newCollectionName, setNewCollectionName] = useState<string>("");
+  const [newCollectionName] = useState<string>("");
   const userCollect = import.meta.env.VITE_USER_COLLECTION;
   const [searchTerm, setSearchTerm] = useState(""); // Track the search input
 
@@ -50,14 +47,13 @@ const AddCollection: React.FC<AddToCollectionProps> = ({
   const postCollectionId = import.meta.env.VITE_COLLECT_OTHERIMG;
   const creatPost = import.meta.env.VITE_USER_POST_COLLECTION_ID;
   const collectionListId = import.meta.env.VITE_USER_COLLECTION;
-  const followsCollectionId = import.meta.env.VITE_USERFOLLOWCOLLECT;
 
   const [userName, setUserName] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState<string>(""); // Added state for displayName
   const [loading, setLoading] = useState<boolean>(true);
 
   const [isOpen, setIsOpen] = useState(true);
-  const [showDialog, setShowDialog] = useState(false);
+  const [] = useState(false);
 
   useEffect(() => {
     console.log("User Collections:", userCollections);
@@ -169,36 +165,8 @@ const AddCollection: React.FC<AddToCollectionProps> = ({
     fetchData();
   }, []);
 
-  const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value.trim();
-    setSearchTerm(searchTerm);
 
-    try {
-      const existingCollections = await databases.listDocuments(
-        databaseId,
-        userCollect
-      );
-
-      const foundCollection = existingCollections.documents.find(
-        (doc) => doc.collectionName.toLowerCase() === searchTerm.toLowerCase()
-      );
-
-      if (foundCollection) {
-        setSelectedCollection(foundCollection.$id);
-        setNewCollectionName("");
-        setShowDialog(false); // Close the dialog if a collection exists
-      } else {
-        setSelectedCollection("");
-        setNewCollectionName(searchTerm);
-        alert(
-          `No collection found with the name "${searchTerm}". Do you want to create one?`
-        );
-      }
-    } catch (error) {
-      console.error("Error searching for collections:", error);
-    }
-  };
-  const fetchOriginalPost = async (imageFileId: string) => {
+  const fetchOriginalPost = async (imageId: string) => {
     try {
       const response = await databases.getDocument(
         databaseId,
@@ -528,3 +496,4 @@ const AddCollection: React.FC<AddToCollectionProps> = ({
 };
 
 export default AddCollection;
+
