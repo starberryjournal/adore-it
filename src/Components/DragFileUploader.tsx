@@ -5,14 +5,12 @@ const DragFileUploader = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       const file = files[0];
       setSelectedFile(file);
-      setIsImageUploaded(true);
 
       const reader = new FileReader();
       reader.onloadend = () => {
