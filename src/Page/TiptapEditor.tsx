@@ -49,7 +49,7 @@ const TiptapEditor: React.FC<Props> = ({
   if (!editor) return null;
 
   return (
-    <div className="editor-wrapper">
+    <div className="">
       <Toolbar editor={editor} onOpenImageSelector={onOpenImageSelector} />
       <EditorContent editor={editor} />
     </div>

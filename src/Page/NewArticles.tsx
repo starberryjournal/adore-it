@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { account, databases, Query, storage } from "../appwrite";
+import { databases, Query, storage } from "../appwrite";
 import { useEffect, useState } from "react";
 import { format } from "date-fns"; // If you're formatting dates
 
 const NewArticles: React.FC = () => {
   const [enrichedArticles, setEnrichedArticles] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const databaseId = import.meta.env.VITE_DATABASE_ID;

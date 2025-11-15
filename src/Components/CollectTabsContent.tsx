@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { account, databases, Query } from "../appwrite";
 import { useNavigate } from "react-router-dom";
-import { useNavigation } from "../Components/NavigationContext";
 
 import FollowUserButton from "./FollowUserButton";
 import { useCurrentUser } from "../Components/useCurrentUser";
@@ -92,16 +91,14 @@ const CollectionImages: React.FC<{
   toggleSelectImage: (imageId: string) => void;
 }> = ({ collectionId, selectMode, selectedImageIds, toggleSelectImage }) => {
   const [loading, setLoading] = useState(true);
-  const { setIsNavigating } = useNavigation();
 
   const { user: currentUser } = useCurrentUser();
   const [error, setError] = useState<string | null>(null);
   const [images, setImages] = useState<any[]>([]);
-  const [deleting, setDeleting] = useState(false);
   const [description, setDescription] = useState<string | null>(null);
 
-  const [fadingImages, setFadingImages] = useState<string[]>([]); // ✅ NEW
-  const [userProfile, setUserProfile] = useState<Post | null>(null);
+  const [fadingImages] = useState<string[]>([]); // ✅ NEW
+  const [, setUserProfile] = useState<Post | null>(null);
   const [userId, setUserId] = useState<string>("");
   const [showBackToTop, setShowBackToTop] = useState(false);
 
@@ -258,29 +255,6 @@ const CollectionImages: React.FC<{
   }, []);
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
-
-  const handleImageClick = (post: Post) => {
-    setIsNavigating(true);
-    setTimeout(() => {
-      navigate(`/Post/${post.$id}`, {
-        state: {
-          imageSrc: `http://localhost:3000/image/${post.imageFileId}`,
-          tags: post.tags ?? "",
-          userName: post.userName,
-          imageFileId: post.imageFileId,
-          userId: post.userId,
-          followId: post.followId,
-          description: post.description,
-          likeCount: post.likeCount,
-          imageId: post.imageId,
-          postedBy: post.postedBy,
-          createdAt: post.createdAt || post.$createdAt,
-          $createdAt: post.$createdAt,
-          id: post.$id,
-        },
-      });
-    }, 100);
-  };
 
   if (loading) return <span className="loader"></span>;
   if (error) return <p>{error}</p>;

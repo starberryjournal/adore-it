@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { databases, Query, storage } from "../appwrite";
+import { databases, Query } from "../appwrite";
 import { useNavigate } from "react-router-dom";
 import FollowUserButton from "./FollowUserButton";
 import LikeCollectShare from "./LikeCollectShare";
 import { formatDistanceToNow } from "date-fns";
 import { useCurrentUser } from "../Components/useCurrentUser";
-import { useNavigation } from "../Components/NavigationContext";
-
 import StaticGif from "./StaticGif";
 import Pagination from "./Pagination";
 
@@ -34,20 +32,6 @@ interface Post {
   likeCount?: string | number;
 }
 
-interface User {
-  userId: string;
-  $id: string;
-  name: string;
-  userName: string;
-  displayName: string;
-  prefs: {
-    bioId: string;
-    displayName: string;
-    profilePictureId?: string;
-    backgroundImageId?: string;
-  };
-}
-
 interface AppImage {
   $id: string;
   imageFileId: string;
@@ -68,13 +52,12 @@ const PAGE_SIZE = 12;
 const PostList: React.FC = () => {
   const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
-  const { setIsNavigating } = useNavigation();
 
   const [posts, setPosts] = useState<Post[]>([]);
-  const [userProfile, setUserProfile] = useState<Post | null>(null);
-  const [likedCollect, setLikedCollect] = useState<AppImage[]>([]);
-  const [likedImages, setLikedImages] = useState<string[]>([]);
-  const [userId, setUserId] = useState<string>("");
+  const [, setUserProfile] = useState<Post | null>(null);
+  const [, setLikedCollect] = useState<AppImage[]>([]);
+  const [likedImages] = useState<string[]>([]);
+  const [userId] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [lastDocument, setLastDocument] = useState<any | null>(null);
@@ -82,8 +65,6 @@ const PostList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPostCount, setTotalPostCount] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  type TabLabel = "Right now" | "Yesterday" | "Last week" | "Last month";
-  const [activeTab, setActiveTab] = useState<TabLabel>("Right now");
 
   const [useInfiniteScroll, setUseInfiniteScroll] = useState(true);
 
@@ -105,11 +86,6 @@ const PostList: React.FC = () => {
       : "Unknown time";
 
   // -------------------- Utility Functions --------------------
-  const getTodayISO = () => {
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    return now.toISOString();
-  };
   const fetchAllPosts = async () => {
     const queries = [Query.orderDesc("createdAt")]; // No limit
     const { posts } = await fetchPosts(queries);
@@ -149,7 +125,6 @@ const PostList: React.FC = () => {
   const fetchPostsByPage = async (page: number) => {
     setLoading(true);
     setHasMore(true);
-    const todayISO = getTodayISO();
     let allPosts: any[] = [];
     let lastDoc = null;
 
@@ -178,7 +153,6 @@ const PostList: React.FC = () => {
   const fetchMorePosts = async () => {
     if (loading || !hasMore) return;
     setLoading(true);
-    const todayISO = getTodayISO();
 
     const queries = [Query.limit(PAGE_SIZE), Query.orderDesc("createdAt")];
     if (lastDocument) queries.push(Query.cursorAfter(lastDocument.$id));
@@ -316,47 +290,6 @@ const PostList: React.FC = () => {
     fetchLikedImages();
   }, [likedImages]);
 
-  // ---------------------date-post------------------------------
-  const groupPostsByTimeframe = (posts: any[]) => {
-    const now = new Date();
-    const todayMidnight = new Date(now);
-    todayMidnight.setHours(0, 0, 0, 0);
-
-    const yesterdayMidnight = new Date(todayMidnight);
-    yesterdayMidnight.setDate(yesterdayMidnight.getDate() - 1);
-
-    const lastWeekMidnight = new Date(todayMidnight);
-    lastWeekMidnight.setDate(lastWeekMidnight.getDate() - 7);
-
-    const lastMonthMidnight = new Date(todayMidnight);
-    lastMonthMidnight.setMonth(lastMonthMidnight.getMonth() - 1);
-
-    const buckets = {
-      "Right now": [] as any[],
-      Yesterday: [] as any[],
-      "Last week": [] as any[],
-      "Last month": [] as any[],
-    };
-
-    for (const post of posts) {
-      const postDate = new Date(post.createdAt);
-      if (postDate >= todayMidnight) {
-        buckets["Right now"].push(post);
-      } else if (postDate >= yesterdayMidnight) {
-        buckets["Yesterday"].push(post);
-      } else if (postDate >= lastWeekMidnight) {
-        buckets["Last week"].push(post);
-      } else if (postDate >= lastMonthMidnight) {
-        buckets["Last month"].push(post);
-      }
-    }
-
-    return buckets;
-  };
-
-  const buckets = groupPostsByTimeframe(posts);
-  const activePosts = buckets[activeTab]; // ✅ No error now
-  // Back to top button show/hide
   useEffect(() => {
     const onScroll = () => setShowBackToTop(window.scrollY > 300);
 
@@ -366,12 +299,12 @@ const PostList: React.FC = () => {
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  const handleImageClick = (image: any) => {
-    const postId = image?.postId;
+  const handleImageClick = (post: any) => {
+    const postId = post?.postId;
 
     if (!postId) {
       console.warn("No valid postId found for navigation.");
-      console.log("Invalid image object:", image);
+      console.log("Invalid image object:", post);
       return;
     }
 

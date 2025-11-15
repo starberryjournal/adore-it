@@ -303,23 +303,6 @@ const PostContent: React.FC = () => {
     updateCurrentPost(relatedImages[prevIdx].$id);
   };
 
-  const handleDeletePost = async () => {
-    if (!currentPost?.id || currentUser?.$id !== currentPost.userId) return;
-
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
-    if (!confirmed) return;
-
-    try {
-      await databases.deleteDocument(databaseId, userPostId, currentPost.id);
-      navigate("/Profile", { state: { userId: currentUser.$id } }); // or any other route
-    } catch (err) {
-      console.error("Error deleting post:", err);
-      alert("Failed to delete the post. Please try again.");
-    }
-  };
-
   const handleImageClick = (post: Post) => {
     setIsPageLoading(true); // <-- Trigger loading immediately
     setIsNavigating(true);

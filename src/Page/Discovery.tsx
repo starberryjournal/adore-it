@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import { account, databases, Query } from "../appwrite";
+import { account, databases } from "../appwrite";
 import { Link, useNavigate } from "react-router-dom";
-import PostList from "../Components/PostList";
 import NewArticles from "./NewArticles";
-import { Models } from "appwrite";
-import StaticGif from "../Components/StaticGif";
-import PostImage from "../Components/postImage";
+import PostImage from "../Components/PostImage";
 
 interface HomeProps {
   onLogout: () => void;
@@ -20,16 +17,13 @@ type Channel = {
 
 const Discovery: React.FC<HomeProps> = () => {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState<string>("");
+  const [, setUserName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  const [posts, setPosts] = useState<Models.Document[]>([]);
 
   const [channels, setChannels] = useState<Channel[]>([]);
-  const [tagCounts, setTagCounts] = useState<{ [tag: string]: number }>({});
 
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const userCollect = import.meta.env.VITE_USER_COLLECTION;
-  const userPostId = import.meta.env.VITE_USER_POST_COLLECTION_ID;
 
   useEffect(() => {
     // Fetch user data when the component mounts (if already signed in)
@@ -80,7 +74,7 @@ const Discovery: React.FC<HomeProps> = () => {
 
     fetchDocuments();
   }, []);
-
+  if (loading) return <span className="loader"></span>;
   return (
     <div className="container4">
       <div className="navigate-sec-prev">

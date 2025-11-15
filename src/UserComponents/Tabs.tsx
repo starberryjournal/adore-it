@@ -107,16 +107,16 @@ const Tabs: React.FC<TabsProps> = ({ activeTab, handleTabClick, user }) => {
             onClick={() => handleTabClick("following")}
           >
             {followingCount > 0
-              ? `${followingCount} following `
-              : "0 following"}
+              ? `${followingCount} Following `
+              : "0 Following"}
           </div>
           <div
             className={`tab2 ${activeTab === "followers" ? "active" : ""}`}
             onClick={() => handleTabClick("followers")}
           >
             {followersCount > 0
-              ? `${followersCount} followers `
-              : "0 followers"}
+              ? `${followersCount} Followers `
+              : "0 Followers"}
           </div>
         </div>
       </div>

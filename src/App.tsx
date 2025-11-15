@@ -31,24 +31,8 @@ import UserArticles from "./Page/UserArticles";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
   const location = useLocation();
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      setIsDarkMode(true);
-    }
-  }, []);
-
-  // Toggle theme function
-  const toggleTheme = () => {
-    setIsDarkMode((prev) => {
-      const newMode = !prev;
-      localStorage.setItem("theme", newMode ? "dark" : "light");
-      return newMode;
-    });
-  };
 
   const shouldHideNavbar = [
     "/SignIn",

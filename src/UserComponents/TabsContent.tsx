@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { account, databases, Query, storage } from "../appwrite";
+import { account, databases, Query } from "../appwrite";
 import { useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { useCurrentUser } from "../Components/useCurrentUser";
@@ -13,9 +13,6 @@ import AddToCollection from "../Components/AddToCollection";
 import LikeCollectShare from "../Components/LikeCollectShare";
 import FollowUserButton from "../Components/FollowUserButton";
 import StaticGif from "../Components/StaticGif";
-
-import { ClipLoader } from "react-spinners";
-import { AppwriteException } from "appwrite";
 import Pagination from "../Components/Pagination";
 
 interface Post {
@@ -77,21 +74,6 @@ interface User {
   prefs: Preferences;
 }
 
-interface CollectionFollowersProps {
-  currentUser: {
-    $id: string;
-    name: string;
-    userName: string;
-    displayName: string;
-    prefs: {
-      bioId: string;
-      displayName: string;
-      profilePictureId?: string;
-      backgroundImageId?: string;
-    };
-  } | null;
-}
-
 interface TabsContentProps {
   activeTab: string; // Currently active tab
 }
@@ -123,25 +105,21 @@ const LatestLikedPictures: React.FC = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeletedMessage, setShowDeletedMessage] = useState(false);
   const [refreshGallery, setRefreshGallery] = useState(false);
-  const [isReloading, setIsReloading] = useState(false);
+  const [, setIsReloading] = useState(false);
 
   const [userCollections, setUserCollections] = useState<any[]>([]);
-  const [showCollectionSelect, setShowCollectionSelect] = useState(false);
   const [showAddCollectionModal, setShowAddCollectionModal] = useState(false);
-  const [selectedImageForModal, setSelectedImageForModal] =
-    useState<Post | null>(null);
+  const [, setSelectedImageForModal] = useState<Post | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [likedImages, setLikedImages] = useState<string[]>([]);
+  const [likedImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const [userProfile, setUserProfile] = useState<Post | null>(null);
+  const [, setUserProfile] = useState<Post | null>(null);
 
-  const [likedCollect, setLikedCollect] = useState<AppImage[]>([]);
+  const [, setLikedCollect] = useState<AppImage[]>([]);
 
-  const [searchTerm, setSearchTerm] = useState(""); // Track the search input
-  const [isAddingToCollection, setIsAddingToCollection] = useState(false);
+  const [isAddingToCollection] = useState(false);
 
   const dbId = import.meta.env.VITE_DATABASE_ID;
-  const userAddImgtoCollect = import.meta.env.VITE_COLLECT_OTHERIMG;
   const userLikes = import.meta.env.VITE_USERL_IKE;
   const userPostCollection = import.meta.env.VITE_USER_POST_COLLECTION_ID;
   const collectionListId = import.meta.env.VITE_USER_COLLECTION;
@@ -428,37 +406,6 @@ const LatestLikedPictures: React.FC = () => {
     setSelectedImageForModal(null); // Clear single-image state if using
     setShowAddCollectionModal(true);
     setSelectedPostsForModal(selectedPosts); // create this state
-  };
-
-  const handleCollectionSelect = async (collectionId: string) => {
-    if (isAddingToCollection) return; // Prevent multiple submissions
-
-    setIsAddingToCollection(true); // Start loading
-
-    try {
-      const promises = selectedImageIds.map((imageId) =>
-        databases.createDocument(dbId, userAddImgtoCollect, "unique()", {
-          userId,
-          imageId,
-          collectionId,
-        })
-      );
-
-      await Promise.all(promises); // Wait for all images to be added
-      alert("Images added to collection!");
-      setSelectedImageIds([]);
-      setSelectMode(false);
-      setShowCollectionSelect(false);
-    } catch (err) {
-      console.error("Error adding to collection:", err);
-      alert("Failed to add images.");
-    } finally {
-      setIsAddingToCollection(false); // Stop loading
-    }
-  };
-
-  const onCollectionSelected = (collectionId: string) => {
-    handleCollectionSelect(collectionId); // Now this will be triggered when they choose a collection
   };
 
   // Format date into relative time
@@ -757,7 +704,6 @@ const Collections: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showDelete, setShowDelete] = useState(false);
-  const [selectMode, setSelectMode] = useState(false);
 
   const dbId = import.meta.env.VITE_DATABASE_ID;
   const creatPost = import.meta.env.VITE_USER_POST_COLLECTION_ID;
@@ -768,7 +714,6 @@ const Collections: React.FC = () => {
 
   const [, setError] = useState<string | null>(null);
   const [, setUserId] = useState<string>(""); // State for userId
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -992,25 +937,23 @@ const Collections: React.FC = () => {
 const UserPosts: React.FC = () => {
   const [UserPosts, setUserPosts] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages] = useState(1);
   const pageRef = useRef<number>(0);
 
   const [, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const dbId = import.meta.env.VITE_DATABASE_ID;
   const userPostCollection = import.meta.env.VITE_USER_POST_COLLECTION_ID;
 
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [totalPosts, setTotalPosts] = useState(0);
 
-  const [page, setPage] = useState(0);
+  const [] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const limit = 10; // Number of posts per page
 
   const fetchUserPosts = async () => {
-    const offset = (page - 1) * limit;
     if (loading || !hasMore) return;
 
     try {

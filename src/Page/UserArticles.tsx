@@ -4,24 +4,9 @@ import { account, databases, Query, storage } from "../appwrite"; // adjust path
 import "./UserArticles.css";
 import { format } from "date-fns";
 import FollowUserButton from "../Components/FollowUserButton";
-import LikeButton from "../Components/LikeButton";
 
 import HeartIcon from "../assets/HeartIcon.svg";
 import HeartOutlineIcon from "../assets/HeartOutlineIcon.svg";
-
-interface Preferences {
-  bioId: string;
-  displayName: string;
-  profilePictureId?: string;
-  backgroundImageId?: string;
-}
-
-interface User {
-  $id: string;
-  name: string;
-  displayName: string;
-  prefs: Preferences;
-}
 
 const UserArticles: React.FC = () => {
   const { postId } = useParams(); // get postId from URL
@@ -31,12 +16,12 @@ const UserArticles: React.FC = () => {
   const [userProfile, setUserProfile] = useState<any>("");
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [htmlContent, setHtmlContent] = useState<string>("");
-  const [similarArticles, setSimilarArticles] = useState<any[]>([]);
+  const [, setSimilarArticles] = useState<any[]>([]);
 
-  const [userName, setUserName] = useState<string | null>(null);
-  const [displayName, setDisplayName] = useState<string>(""); // Added state for displayName
+  const [, setUserName] = useState<string | null>(null);
+  const [, setDisplayName] = useState<string>(""); // Added state for displayName
   const [userId, setUserId] = useState<string | null>(null);
-  const [collectionName, setCollectionName] = useState<string | null>(null);
+  const [, setCollectionName] = useState<string | null>(null);
   const [collection, setCollection] = useState<any>(null);
   const [enrichedArticles, setEnrichedArticles] = useState<any[]>([]);
   const [likeCount, setLikeCount] = useState<number>(0); // Local state to hold the like count
@@ -49,13 +34,9 @@ const UserArticles: React.FC = () => {
 
   const userArticles = import.meta.env.VITE_USER_ARTICLES;
   const userLikesArticles = import.meta.env.VITE_USERLIKE_ARTICLE;
-  const notificationsCollectionId = import.meta.env.VITE_NOTIFICATIONS;
 
   const userCollect = import.meta.env.VITE_USER_COLLECTION;
   const collectionId = import.meta.env.VITE_USER_PREF_COLLECTION_ID;
-  const isOwner =
-    currentUser?.$id && post?.userId && currentUser.$id === post.userId;
-
   const fetchPostById = async (postId: string) => {
     try {
       const fetchedPost = await databases.getDocument(
@@ -131,9 +112,6 @@ const UserArticles: React.FC = () => {
     if (!tags.length) return;
 
     try {
-      const queries = tags.map((tag: string) =>
-        Query.search("tags", tag.trim())
-      );
       const response = await databases.listDocuments(databaseId, userArticles, [
         Query.limit(5),
         Query.orderDesc("$createdAt"),
@@ -307,13 +285,6 @@ const UserArticles: React.FC = () => {
     }
   }, [postId]);
 
-  const cleanText = (html: string): string => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = html;
-    const text = tempDiv.textContent || tempDiv.innerText || "";
-    return text.replace(/\s+/g, " ").trim(); // collapse and trim whitespace
-  };
-
   const fetchArticlePreview = async (fileId: string): Promise<string> => {
     try {
       const fileUrl = storage.getFileView(
@@ -364,15 +335,6 @@ const UserArticles: React.FC = () => {
       fetchHtmlContent(post.contentFileId);
     }
   }, [post]);
-
-  const getFormattedDate = (createdAt?: string) => {
-    if (!createdAt) return "Unknown time";
-    try {
-      return format(new Date(createdAt), "MMMM d, yyyy 'at' h:mm a");
-    } catch {
-      return "Invalid date";
-    }
-  };
 
   const getFormattedDate2 = (createdAt?: string) => {
     if (!createdAt) return "Unknown time";

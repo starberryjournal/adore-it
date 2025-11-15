@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import Toast from "../Components/Toast";
 import CollectLayoutCollect from "../Components/CollectLayoutCollect";
 
-import imageIcon from "/src/assets/SVG/wallpaper-svgrepo-com.svg";
 import TiptapEditor from "./TiptapEditor";
 
 interface Collection {
@@ -62,18 +61,15 @@ const EditorPage: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: string } | null>(
-    null
-  );
+  const [, setToast] = useState<{ message: string; type: string } | null>(null);
   const [showDialog, setShowDialog] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [showImageSelector, setShowImageSelector] = useState(false);
-  const [allImages, setAllImages] = useState<Picture[]>([]); // Fetched from collections
+  const [, setAllImages] = useState<Picture[]>([]); // Fetched from collections
   const [showCoverSelector, setShowCoverSelector] = useState(false);
   const [showEditorImageSelector, setShowEditorImageSelector] = useState(false);
 
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setUser] = useState<User | null>(null);
+  const [, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   const [collections, setCollections] = useState<any[]>([]);
@@ -81,7 +77,7 @@ const EditorPage: React.FC = () => {
     useState<(url: string) => void>();
   const [recentImages, setRecentImages] = useState<any[]>([]);
   const [, setError] = useState<string | null>(null);
-  const [isDraft, setIsDraft] = useState(false); // To track if content is saved as a draft
+  const [isDraft] = useState(false); // To track if content is saved as a draft
 
   const [draftToDelete, setDraftToDelete] = useState<string | null>(null);
 
@@ -97,18 +93,8 @@ const EditorPage: React.FC = () => {
   const userArcticles = import.meta.env.VITE_USER_ARTICLES;
   const userPostId = import.meta.env.VITE_USER_POST_COLLECTION_ID;
   const userCollect = import.meta.env.VITE_USER_COLLECTION;
-  const bucketPost = import.meta.env.VITE_BUCKET_POST;
   const postCollectionId = import.meta.env.VITE_COLLECT_OTHERIMG;
   const draftsArticle = import.meta.env.VITE_DRAFTS_ARTICLE;
-  const handleCoverUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setCoverFile(file);
-      const reader = new FileReader();
-      reader.onload = () => setCoverPreview(reader.result as string);
-      reader.readAsDataURL(file);
-    }
-  };
 
   const fetchCurrentUser = async () => {
     try {

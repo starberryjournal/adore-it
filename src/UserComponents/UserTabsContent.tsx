@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { account, databases, Query } from "../appwrite";
+import { databases, Query } from "../appwrite";
 import { useNavigate } from "react-router-dom";
-import CollectLayout from "../Components/CollectLayout";
 import { QueryTypes } from "appwrite";
 import CollectLayoutUserFollow from "../Components/CollectLayoutUserFollow";
+import FollowUserButton from "../Components/FollowUserButton";
+import { useCurrentUser } from "../Components/useCurrentUser";
 
 interface Post {
   $id: string;
@@ -15,21 +16,6 @@ interface Post {
   userName: string;
   description: string;
   likeCount: string;
-}
-
-interface Preferences {
-  bioId: string;
-  displayName: string;
-  profilePictureId?: string;
-  backgroundImageId?: string;
-}
-
-interface User {
-  $id: string;
-  name: string;
-  userName: string;
-  displayName: string;
-  prefs: Preferences;
 }
 
 interface userTabsContentProps {
@@ -50,6 +36,8 @@ const UserTabsContent: React.FC<userTabsContentProps> = ({
       {activeTab === "latest" && <LatestLikedPictures userName={userName} />}
       {activeTab === "collections" && <Collections userName={userName} />}
       {activeTab === "post" && <UserPosts userName={userName} />}
+      {activeTab === "following" && <UserFollowing userName={userName} />}
+      {activeTab === "followers" && <UserFollowers userName={userName} />}
     </div>
   );
 };
@@ -142,8 +130,6 @@ const Collections: React.FC<PostProps> = ({ userName }) => {
   const [followedCollections, setFollowedCollections] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>(""); // State for search functionality
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -378,6 +364,217 @@ const UserPosts: React.FC<PostProps> = ({ userName }) => {
               onClick={() => handleImageClick(post)}
             />
           )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const UserFollowing: React.FC<PostProps> = ({ userName }) => {
+  const { user: currentUser } = useCurrentUser();
+  const [following, setFollowing] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+  const databaseId = import.meta.env.VITE_DATABASE_ID;
+  const userFollowUser = import.meta.env.VITE_USERFOLLOWUSER;
+  const prefCollection = import.meta.env.VITE_USER_PREF_COLLECTION_ID;
+
+  useEffect(() => {
+    if (!userName) {
+      setError("Invalid userName provided.");
+      setLoading(false);
+      return;
+    }
+
+    const fetchFollowing = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        // 1. Grab the "following" relationships
+        const rels = await databases.listDocuments(databaseId, userFollowUser, [
+          Query.equal("userName", userName), // who this profile follows
+        ]);
+        const followingIds = rels.documents.map((doc) => doc.followUserId);
+
+        if (followingIds.length === 0) {
+          setFollowing([]);
+          return;
+        }
+
+        // 2. Fetch all followed user profiles
+        const profiles = await Promise.all(
+          followingIds.map(async (id) => {
+            const res = await databases.listDocuments(
+              databaseId,
+              prefCollection,
+              [Query.equal("userId", id)]
+            );
+            return res.documents[0] ?? null;
+          })
+        );
+
+        setFollowing(profiles.filter(Boolean));
+      } catch (err) {
+        console.error("Error loading following:", err);
+        setError("Failed to load following list.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFollowing();
+  }, [userName]);
+
+  if (loading) return <span className="loader" />;
+  if (error) return <p>{error}</p>;
+
+  return (
+    <div className="following-section">
+      {following.map((user) => (
+        <div className="follow-section" key={user.userId}>
+          <div
+            className="follow-left-side"
+            onClick={() => navigate(`/User/${user.userName}`)}
+          >
+            <div className="follow-user-profile-picture">
+              {user.profilePictureId ? (
+                <img
+                  src={`https://cloud.appwrite.io/v1/storage/buckets/${databaseId}/files/${
+                    user.profilePictureId
+                  }/view?project=${import.meta.env.VITE_PROJECT_ID}`}
+                  alt={`${user.displayName}'s Profile`}
+                  onError={(e) =>
+                    (e.currentTarget.src = "/default-profile.jpg")
+                  }
+                />
+              ) : (
+                <p>No profile picture</p>
+              )}
+            </div>
+            <div className="user-info">
+              <p>
+                <strong>{user.displayName}</strong>
+              </p>
+              <p className="user-place">@{user.userName}</p>
+            </div>
+          </div>
+          <div className="follow-right-side">
+            {currentUser && user.userId !== currentUser.$id && (
+              <FollowUserButton
+                followId={user.userId}
+                userId={currentUser.$id}
+                currentUser={currentUser}
+              />
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const UserFollowers: React.FC<PostProps> = ({ userName }) => {
+  const { user: currentUser } = useCurrentUser();
+  const [followers, setFollowers] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+  const databaseId = import.meta.env.VITE_DATABASE_ID;
+  const userFollowUser = import.meta.env.VITE_USERFOLLOWUSER;
+  const prefCollection = import.meta.env.VITE_USER_PREF_COLLECTION_ID;
+
+  useEffect(() => {
+    if (!userName) {
+      setError("Invalid userName provided.");
+      setLoading(false);
+      return;
+    }
+
+    const fetchFollowers = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        // 1. Grab the follower relationships
+        const rels = await databases.listDocuments(databaseId, userFollowUser, [
+          Query.equal("userName", userName as QueryTypes),
+        ]);
+        const followerIds = rels.documents.map((doc) => doc.userId);
+
+        if (followerIds.length === 0) {
+          setFollowers([]);
+          return;
+        }
+
+        // 2. Fetch all follower profiles in one go
+        const profiles = await Promise.all(
+          followerIds.map((id) =>
+            databases
+              .listDocuments(databaseId, prefCollection, [
+                Query.equal("userId", id),
+              ])
+              .then((res) => res.documents[0])
+          )
+        );
+
+        setFollowers(profiles);
+      } catch (err) {
+        console.error("Error loading followers:", err);
+        setError("Failed to load your followers.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFollowers();
+  }, [currentUser]);
+
+  if (loading) return <span className="loader" />;
+  if (error) return <p>{error}</p>;
+  if (!currentUser) return null;
+
+  return (
+    <div className="followers-section">
+      {followers.map((user) => (
+        <div className="follow-section" key={user.userId}>
+          <div
+            className="follow-left-side"
+            onClick={() => navigate(`/User/${user.userName}`)}
+          >
+            <div className="follow-user-profile-picture">
+              {user.profilePictureId ? (
+                <img
+                  src={`http://localhost:3000/profilePicture/${user.profilePictureId}`}
+                  alt={`${user.displayName}'s Profile`}
+                  onError={(e) =>
+                    (e.currentTarget.src = "/default-profile.jpg")
+                  }
+                />
+              ) : (
+                <p>No profile picture</p>
+              )}
+            </div>
+
+            <div className="user-info">
+              <p>
+                <strong>{user.displayName}</strong>
+              </p>
+              <p className="user-place">@{user.userName}</p>
+            </div>
+          </div>
+          <div className="follow-right-side">
+            {currentUser && user.userId !== currentUser.$id && (
+              <FollowUserButton
+                followId={user.userId}
+                userId={currentUser.$id}
+                currentUser={currentUser}
+              />
+            )}
+          </div>
         </div>
       ))}
     </div>

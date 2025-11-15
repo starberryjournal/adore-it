@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { databases, Query, storage } from "../appwrite";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import { databases, Query } from "../appwrite";
+import { useNavigate } from "react-router-dom";
 
 import "../components/TablePage.css";
-import ImageLayout from "./CollectFollowLayout";
 import FollowUserButton from "./FollowUserButton";
-import { format, formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 import { useCurrentUser } from "./useCurrentUser";
 import LikeCollectShare from "./LikeCollectShare";
 import StaticGif from "./StaticGif";
@@ -111,15 +110,14 @@ const Tabs: React.FC = () => {
 };
 
 const LatestPictures: React.FC = () => {
-  const [latestPictures, setLatestPictures] = useState<any[]>([]);
   const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
   const [posts, setPosts] = useState<Post[]>([]);
-  const [userProfile, setUserProfile] = useState<Post | null>(null);
-  const [likedCollect, setLikedCollect] = useState<AppImage[]>([]);
-  const [likedImages, setLikedImages] = useState<string[]>([]);
-  const [userId, setUserId] = useState<string>("");
+  const [, setUserProfile] = useState<Post | null>(null);
+  const [, setLikedCollect] = useState<AppImage[]>([]);
+  const [likedImages] = useState<string[]>([]);
+  const [userId] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [lastDocument, setLastDocument] = useState<any | null>(null);
@@ -127,8 +125,6 @@ const LatestPictures: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPostCount, setTotalPostCount] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  type TabLabel = "Right now" | "Yesterday" | "Last week" | "Last month";
-  const [activeTab, setActiveTab] = useState<TabLabel>("Right now");
 
   const [useInfiniteScroll, setUseInfiniteScroll] = useState(true);
 
@@ -152,7 +148,6 @@ const LatestPictures: React.FC = () => {
   // -------------------- Utility Functions --------------------
   const startOfToday = new Date();
   startOfToday.setHours(0, 0, 0, 0); // midnight
-  const startTimestamp = Math.floor(startOfToday.getTime() / 1000); // convert to seconds
 
   const fetchAllPosts = async () => {
     const queries = [
@@ -432,13 +427,6 @@ const LatestPictures: React.FC = () => {
     return () => observerRef.current?.disconnect();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="page-loader">
-        <span className="loader"></span>
-      </div>
-    );
-  }
   return (
     <div className="d">
       <div className="gallery">
@@ -619,15 +607,14 @@ const LatestPictures: React.FC = () => {
 };
 
 const PopularPictures: React.FC = () => {
-  const [latestPictures, setLatestPictures] = useState<any[]>([]);
   const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
   const [posts, setPosts] = useState<Post[]>([]);
-  const [userProfile, setUserProfile] = useState<Post | null>(null);
-  const [likedCollect, setLikedCollect] = useState<AppImage[]>([]);
-  const [likedImages, setLikedImages] = useState<string[]>([]);
-  const [userId, setUserId] = useState<string>("");
+  const [, setUserProfile] = useState<Post | null>(null);
+  const [, setLikedCollect] = useState<AppImage[]>([]);
+  const [likedImages] = useState<string[]>([]);
+  const [userId] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [lastDocument, setLastDocument] = useState<any | null>(null);
@@ -1122,15 +1109,14 @@ const PopularPictures: React.FC = () => {
 };
 
 const Collections: React.FC = () => {
-  const [latestPictures, setLatestPictures] = useState<any[]>([]);
   const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
   const [posts, setPosts] = useState<Post[]>([]);
-  const [userProfile, setUserProfile] = useState<Post | null>(null);
-  const [likedCollect, setLikedCollect] = useState<AppImage[]>([]);
-  const [likedImages, setLikedImages] = useState<string[]>([]);
-  const [userId, setUserId] = useState<string>("");
+  const [, setUserProfile] = useState<Post | null>(null);
+  const [, setLikedCollect] = useState<AppImage[]>([]);
+  const [likedImages] = useState<string[]>([]);
+  const [userId] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [lastDocument, setLastDocument] = useState<any | null>(null);
@@ -1138,9 +1124,6 @@ const Collections: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPostCount, setTotalPostCount] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  type TabLabel = "Right now" | "Yesterday" | "Last week" | "Last month";
-  const [activeTab, setActiveTab] = useState<TabLabel>("Right now");
-
   const [useInfiniteScroll, setUseInfiniteScroll] = useState(true);
 
   const loaderRef = useRef<HTMLDivElement | null>(null);
@@ -1619,15 +1602,14 @@ const Collections: React.FC = () => {
 };
 
 const Hearters: React.FC = () => {
-  const [latestPictures, setLatestPictures] = useState<any[]>([]);
   const navigate = useNavigate();
   const { user: currentUser } = useCurrentUser();
 
   const [posts, setPosts] = useState<Post[]>([]);
-  const [userProfile, setUserProfile] = useState<Post | null>(null);
-  const [likedCollect, setLikedCollect] = useState<AppImage[]>([]);
-  const [likedImages, setLikedImages] = useState<string[]>([]);
-  const [userId, setUserId] = useState<string>("");
+  const [, setUserProfile] = useState<Post | null>(null);
+  const [, setLikedCollect] = useState<AppImage[]>([]);
+  const [likedImages] = useState<string[]>([]);
+  const [userId] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [lastDocument, setLastDocument] = useState<any | null>(null);
@@ -1635,8 +1617,6 @@ const Hearters: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPostCount, setTotalPostCount] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  type TabLabel = "Right now" | "Yesterday" | "Last week" | "Last month";
-  const [activeTab, setActiveTab] = useState<TabLabel>("Right now");
 
   const [useInfiniteScroll, setUseInfiniteScroll] = useState(true);
 

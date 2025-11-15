@@ -19,17 +19,10 @@ interface Picture {
   fileName: string;
 }
 
-interface Image {
-  $id: string;
-  imageFileId: string;
-  fileName: string;
-}
-
 const AddCollection: React.FC<AddToCollectionProps> = ({
   imageId,
   userId,
   imageFileId,
-  postedBy,
   userCollections,
   imageUrl,
   onImageAdded,
@@ -413,12 +406,6 @@ const AddCollection: React.FC<AddToCollectionProps> = ({
       console.error("❌ Error adding image to collection:", error);
       alert("Failed to add image. Please try again.");
     }
-  };
-
-  const handleSelectCollection = (
-    collectionId: React.SetStateAction<string>
-  ) => {
-    setSelectedCollection(collectionId);
   };
 
   return (
