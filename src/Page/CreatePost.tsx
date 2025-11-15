@@ -5,27 +5,6 @@ import CollectLayoutCollect from "../Components/CollectLayoutCollect";
 import "../Components/DragFileUploader.css";
 import Toast from "../Components/Toast";
 
-interface Post {
-  $id: string;
-  imageFileId?: string;
-  followId?: string;
-  userId?: string;
-  tags?: string;
-  userName?: string;
-  displayName?: string;
-  profilePictureId?: string;
-  collectionName?: string;
-  description?: string;
-  postId?: string;
-  collectionId?: string;
-  imageId?: string;
-  fileName?: string;
-  createdAt?: string;
-  $createdAt?: string;
-  postedBy?: string; // Add posted by to the interface
-  likeCount?: string;
-  links?: string;
-}
 interface Collection {
   $id: string;
   collectionName: string;
@@ -66,19 +45,17 @@ const CreatePost: React.FC = () => {
   const isFormValid = Boolean((file || imagePreview) && tags.length > 0);
 
   const [tagInput, setTagInput] = useState("");
-  const [likedImages, setLikedImages] = useState<{ [key: string]: boolean }>(
-    {}
-  ); // Track liked images
+ 
   const tagInputRef = useRef<HTMLInputElement>(null);
   const [, setError] = useState<string | null>(null);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: string } | null>(
+  const [, setToast] = useState<{ message: string; type: string } | null>(
     null
   );
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const [uploadedFileId, setUploadedFileId] = useState("");
-  const [isUrlUploadReady, setIsUrlUploadReady] = useState(false);
+  const [, setUploadedFileId] = useState("");
+  const [, setIsUrlUploadReady] = useState(false);
   const [usedTags, setUsedTags] = useState<any[]>([]);
   const [channels, setChannels] = useState<Channel[]>([]);
 
@@ -227,9 +204,6 @@ const CreatePost: React.FC = () => {
     }
   }, [tagError]);
 
-  const generateRandomNumber = () => {
-    return Math.floor(Math.random() * 1000000000); // Generate a random number with 9 digits
-  };
   const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTagInput(e.target.value);
 
@@ -262,18 +236,7 @@ const CreatePost: React.FC = () => {
     setTagError(false); // Reset error state if needed
   };
 
-  const handleLike = (imageId: string) => {
-    setLikedImages((prevLikedImages) => ({
-      ...prevLikedImages,
-      [imageId]: !prevLikedImages[imageId],
-    }));
-  };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      setIsImageUploaded(true); // Updates state when an image is uploaded
-    }
-  };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
