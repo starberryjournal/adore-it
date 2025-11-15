@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { account, databases, Query } from "../appwrite";
-import FollowCollectButton from "./FollowCollectButton";
 
 interface Picture {
   $id: string;
@@ -25,29 +24,28 @@ const CollectLayout: React.FC<Props> = ({
   collection,
   recentImages,
   followedCollections,
-  handleFollow,
 }) => {
-  const { collectionId } = useParams<{ collectionId: string }>();
+  // const { collectionId } = useParams<{ collectionId: string }>();
   const navigate = useNavigate();
   const filteredImages = recentImages
     .filter((picture) => picture.collectionId === collection.$id)
     .slice(0, 3);
 
-  const [isHovered, setIsHovered] = useState(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isHovered] = useState(false);
+  const [, setLoading] = useState<boolean>(true);
 
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
+  // const handleMouseEnter = () => setIsHovered(true);
+  //const handleMouseLeave = () => setIsHovered(false);
 
   const [imageCount, setImageCount] = useState<number>(0);
   const [FollowCount, setFollowCount] = useState<number>(0);
-  const [currentUserId, setCurrentUserId] = useState("");
-  const [collectionUserId, setCollectionUserId] = useState("");
+  const [, setCurrentUserId] = useState("");
+  // const [collectionUserId, setCollectionUserId] = useState("");
 
   const dbId = import.meta.env.VITE_DATABASE_ID;
   const postCollectionId = import.meta.env.VITE_COLLECT_OTHERIMG;
   const creatPost = import.meta.env.VITE_USER_POST_COLLECTION_ID;
-  const collectionListId = import.meta.env.VITE_USER_COLLECTION;
+  // const collectionListId = import.meta.env.VITE_USER_COLLECTION;
   const followsCollectionId = import.meta.env.VITE_USERFOLLOWCOLLECT;
 
   useEffect(() => {
