@@ -1,4 +1,4 @@
-import { account, databases, Query } from "../appwrite";
+import { databases } from "../appwrite";
 
 type NotificationInput = {
   recipientId: string;
