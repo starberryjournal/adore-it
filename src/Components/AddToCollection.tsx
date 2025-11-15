@@ -41,9 +41,9 @@ const AddToCollection: React.FC<AddToCollectionProps> = ({
   const [, setUserId] = useState<string>(""); // State for userId
   const [collections, setCollections] = useState<any[]>(userCollections || []);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [, setIsOpen] = useState(true);
 
   const [newCollectionName, setNewCollectionName] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
