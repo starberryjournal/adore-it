@@ -30,19 +30,6 @@ interface State {
   $id: string;
 }
 
-interface Preferences {
-  bioId: string;
-  displayName: string;
-  profilePictureId?: string;
-  backgroundImageId?: string;
-}
-
-interface User {
-  $id: string;
-  name: string;
-  displayName: string;
-  prefs: Preferences;
-}
 
 interface Post {
   $id: string;
@@ -104,8 +91,8 @@ const PostContent: React.FC = () => {
   const [relatedImages, setRelatedImages] = useState<Post[]>([]);
   const [links, setLinks] = useState<string[]>([]);
   const [userProfile, setUserProfile] = useState<any>(null);
-  const [likedImages, setLikedImages] = useState<string[]>([]);
-  const [likedCollect, setLikedCollect] = useState<AppImage[]>([]);
+  const [, setLikedImages] = useState<string[]>([]);
+  const [, setLikedCollect] = useState<AppImage[]>([]);
   const [userId, setUserId] = useState<string>("");
   const [showActionMenu, setShowActionMenu] = useState(false);
 
@@ -113,8 +100,6 @@ const PostContent: React.FC = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showEditPanel, setShowEditPanel] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [similarImages, setSimilarImages] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const userPostId = import.meta.env.VITE_USER_POST_COLLECTION_ID;
