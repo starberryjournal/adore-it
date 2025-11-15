@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { databases, Query } from "../appwrite";
 
 interface Picture {
@@ -27,11 +26,11 @@ const CollectLayoutCollect: React.FC<Props> = ({
     .slice(0, 3);
 
   const [imageCount, setImageCount] = useState<number>(0);
-  const [FollowCount, setFollowCount] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  // const [FollowCount, setFollowCount] = useState<number>(0);
+ // const [loading, setLoading] = useState<boolean>(true);
+ // const [error, setError] = useState<string | null>(null);
 
-  const [images, setImages] = useState<any[]>([]);
+  // const [images, setImages] = useState<any[]>([]);
 
   const dbId = import.meta.env.VITE_DATABASE_ID;
   const postCollectionId = import.meta.env.VITE_COLLECT_OTHERIMG;
