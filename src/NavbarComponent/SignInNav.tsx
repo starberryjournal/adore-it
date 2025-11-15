@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { account } from "../appwrite";
+import { account, storage } from "../appwrite";
 import "./SignInNav.css";
 import SearchBar from "./SearchBar";
 import NotificationsDropdown from "../Components/NotificationsDropdown";
@@ -204,7 +204,10 @@ export default function SignInNav() {
             <NavLink to="/Profile">
               {user.prefs.profilePictureId && (
                 <img
-                  src={`http://localhost:3000/profilePicture/${user.prefs.profilePictureId}`}
+                  src={storage.getFilePreview(
+                    import.meta.env.VITE_BUCKET_PFPBG,
+                    user.prefs.profilePictureId
+                  )}
                   alt="Profile"
                 />
               )}
@@ -219,3 +222,4 @@ export default function SignInNav() {
     </div>
   );
 }
+
