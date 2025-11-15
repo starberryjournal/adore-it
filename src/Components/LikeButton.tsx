@@ -22,7 +22,6 @@ interface LikeButtonProps {
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({
-  likedOwnerId,
   userName,
   displayName,
   imageFileId,
@@ -37,7 +36,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   onLikeUpdate,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
