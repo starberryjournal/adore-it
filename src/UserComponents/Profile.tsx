@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { databases, Query } from "../appwrite"; // Assuming you use Appwrite for fetching data
 import "./ProfilePicture.css";
 import UserTabs from "./UserTabs";
@@ -17,26 +17,18 @@ interface Preferences {
   backgroundImageId?: string;
 }
 
-interface User {
-  posts: any;
-  $id: string;
-  name: string;
-  userName: string;
-  displayName: string;
-  prefs: Preferences;
-}
+
 
 const Profile: React.FC = () => {
   const { userName } = useParams() as { userName: string };
   const location = useLocation();
-  const [user, setUser] = useState<User | null>(null);
   const { user: currentUser } = useCurrentUser();
 
   const [selectedUserPrefs, setSelectedUserPrefs] =
     useState<Preferences | null>(null);
   const [activeTab, setActiveTab] = useState("latest");
   const { followId, userId } = location.state || {}; // Extract state from navigation
-  const navigate = useNavigate();
+
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);
@@ -147,3 +139,4 @@ const Profile: React.FC = () => {
 };
 
 export default Profile;
+
