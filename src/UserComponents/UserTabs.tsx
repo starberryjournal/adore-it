@@ -2,20 +2,6 @@ import React, { useEffect, useState } from "react";
 import { databases, Query } from "../appwrite";
 import { QueryTypes } from "appwrite";
 
-interface Preferences {
-  bioId: string;
-  displayName: string;
-  profilePictureId?: string;
-  backgroundImageId?: string;
-}
-
-interface User {
-  $id: string;
-  name: string;
-  displayName: string;
-  prefs: Preferences;
-}
-
 interface userTabsProps {
   activeTab: string; // Currently active tab
   handleTabClick: (tabName: string) => void; // Function to handle tab change
@@ -130,3 +116,4 @@ const UserTabs: React.FC<userTabsProps> = ({
 };
 
 export default UserTabs;
+
