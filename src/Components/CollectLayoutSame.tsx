@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { databases, Query } from "../appwrite";
 
 interface Picture {
   $id: string;
@@ -28,8 +27,8 @@ const CollectLayoutSame: React.FC<Props> = ({
   const navigate = useNavigate();
   const filteredImages = recentImages.slice(0, 3);
   const [isHovered, setIsHovered] = useState(false);
-  const [imageCount, setImageCount] = useState<number>(0);
-  const [followCount, setFollowCount] = useState<number>(0);
+  //const [imageCount, setImageCount] = useState<number>(0);
+  //const [followCount, setFollowCount] = useState<number>(0);
 
   return (
     <div className="collections-square-collect">
