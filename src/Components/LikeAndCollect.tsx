@@ -69,12 +69,12 @@ const LikAndCollect: React.FC<LikendCollectProps> = ({
 }) => {
   const [liked, setLiked] = useState(false);
   const [collections, setCollections] = useState<any[]>([]);
-  const [loadingCollections, setLoadingCollections] = useState(false);
+  const [, setLoadingCollections] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(initialLikeCount || 0);
   const [showAlert, setShowAlert] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [selectedUserPrefs, setSelectedUserPrefs] =
+  const [, setSelectedUserPrefs] =
     useState<Preferences | null>(null);
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const likeCollectionId = import.meta.env.VITE_USERL_IKE;
