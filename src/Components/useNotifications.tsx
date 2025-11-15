@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { databases, account, Query, client, storage } from "../appwrite";
+import { databases, account, Query, client } from "../appwrite";
 import { Models } from "appwrite";
 
 // Types
@@ -61,7 +61,6 @@ const useNotifications = ({
   const POSTS_COLLECTION_ID = import.meta.env.VITE_USER_POST_COLLECTION_ID;
   const USERS_COLLECTION_ID = import.meta.env.VITE_USER_PREF_COLLECTION_ID;
   const NOTIFICATIONS_COLLECTION_ID = import.meta.env.VITE_NOTIFICATIONS;
-  const STORAGE_BUCKET_ID = import.meta.env.VITE_BUCKET_PFPBG;
 
   useEffect(() => {
     account.get().then((user) => {
