@@ -11,17 +11,14 @@ const CollectionImages: React.FC = () => {
   const [collectionUserId, setCollectionUserId] = useState("");
   const [images, setImages] = useState<any[]>([]);
   const [background, setBackground] = useState<any[]>([]);
-  const [description, setDescription] = useState("");
+  const [, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("CollectionImages");
   const [error, setError] = useState<string | null>(null);
-  const [userId, setUserId] = useState("");
+  const [userId] = useState("");
   const [userProfile, setUserProfile] = useState<any | null>(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showDeletedMessage, setShowDeletedMessage] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [fadingImages, setFadingImages] = useState<string[]>([]);
-  const [refreshFlag, setRefreshFlag] = useState(false);
 
   const [deleting, setDeleting] = useState(false);
 
@@ -155,63 +152,6 @@ const CollectionImages: React.FC = () => {
       alert("Failed to delete images.");
     } finally {
       setDeleting(false);
-    }
-  };
-  // Utility function to wait for the transition end event
-  const waitForTransitionEnd = (element: HTMLElement) => {
-    return new Promise<void>((resolve) => {
-      const onTransitionEnd = () => {
-        element.removeEventListener("transitionend", onTransitionEnd);
-        resolve();
-      };
-
-      element.addEventListener("transitionend", onTransitionEnd);
-    });
-  };
-
-  const confirmDelete = async () => {
-    setFadingImages(selectedImageIds); // Trigger fade-out animation
-    setDeleting(true); // Optionally show loading state or spinner
-
-    try {
-      // For each selected image, wait for the transition to end
-      const fadeOutPromises = selectedImageIds.map((imageId) => {
-        const imageElement = document.getElementById(imageId) as HTMLElement;
-        return waitForTransitionEnd(imageElement);
-      });
-
-      // Wait for all fade-out transitions to complete
-      await Promise.all(fadeOutPromises);
-
-      // Delete images from the database after the transition ends
-      for (const imageId of selectedImageIds) {
-        await databases.deleteDocument(
-          databaseId, // your database ID
-          collectIMG, // collection ID
-          imageId
-        );
-      }
-
-      // Remove deleted images from UI
-      setImages((prevImages) =>
-        prevImages.filter((img) => !selectedImageIds.includes(img.$id))
-      );
-      setSelectedImageIds([]); // Clear the selected images
-      setSelectMode(false); // Exit select mode
-      setShowConfirmModal(false); // Close the confirmation modal
-      setFadingImages([]); // Reset fading images state
-
-      // Show success message
-      setShowDeletedMessage(true);
-
-      // Hide "Deleted" message after 3 seconds
-      setTimeout(() => {
-        setShowDeletedMessage(false);
-      }, 3000);
-    } catch (err) {
-      console.error("Delete failed:", err);
-    } finally {
-      setDeleting(false); // Hide loading spinner
     }
   };
 
