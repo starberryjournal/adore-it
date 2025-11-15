@@ -10,7 +10,6 @@ import BellIcon from "/src/assets/SVG/bell-svgrepo-com.svg"; // Use import for c
 import HomeIcon from "/src/assets/SVG/house-property-svgrepo-com.svg";
 import GridIcon from "/src/assets/SVG/square-4-grid-svgrepo-com.svg";
 import SquareIcon from "/src/assets/SVG/add-square-svgrepo-com.svg";
-import PencilsIcon from "/src/assets/SVG/edit-svgrepo-com.svg";
 import LogoIcon from "/src/assets/SVG/JEKIFFELOGO2.png";
 
 interface Preferences {
@@ -29,15 +28,12 @@ export default function SignInNav() {
   const [user, setUser] = useState<User | null>(null);
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const collectPost = import.meta.env.VITE_USER_POST_COLLECTION_ID;
-  const profileBg = import.meta.env.VITE_BUCKET_PFPBG;
   const userCollect = import.meta.env.VITE_USER_COLLECTION;
-  const idCrees = import.meta.env.VITE_ID_CREATION;
   const navigate = useNavigate();
   const { notifications } = useNotifications({ filter: "unread" });
   const unreadCount = notifications.length;
   const [showNotifications, setShowNotifications] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  let closeTimeout: ReturnType<typeof setTimeout>;
 
   const fetchCurrentUser = async () => {
     try {
@@ -82,17 +78,6 @@ export default function SignInNav() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const handleMouseLeave = () => {
-    closeTimeout = setTimeout(() => {
-      setShowNotifications(false);
-    }, 200); // 200ms delay
-  };
-
-  const handleMouseEnter = () => {
-    clearTimeout(closeTimeout);
-    setShowNotifications(true);
-  };
 
   if (!user) {
     return <p>Loading user data...</p>;
