@@ -203,10 +203,10 @@ export default function SignInNav() {
           <div className="user-profile">
             <NavLink to="/Profile">
               {user.prefs.profilePictureId && (
-                <img
-                src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${user.prefs.profilePictureId}/view?project=67bc93bc0004228cf938`}
-                alt="Profile"
-              />
+               <img
+                  src={`https://nyc.cloud.appwrite.io/v1/storage/buckets/68c473a000124c872ebd/files/${user.prefs.profilePictureId}/view?project=68c41ac8003cc08ef7d6`}
+                  alt="Profile"
+                />
               )}
             </NavLink>
           </div>
