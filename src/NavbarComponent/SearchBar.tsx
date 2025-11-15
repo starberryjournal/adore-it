@@ -34,15 +34,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
   const resultsContainerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const removeDuplicates = (suggestions: Suggestion[]): Suggestion[] => {
-    const seen = new Set();
-    return suggestions.filter((suggestion) => {
-      const key = suggestion.tags.toLowerCase();
-      const isNew = !seen.has(key);
-      seen.add(key);
-      return isNew;
-    });
-  };
 
   const fetchSuggestions = useCallback(
     async (term: string) => {
@@ -223,3 +214,4 @@ const SearchBar: React.FC<SearchBarProps> = ({
 };
 
 export default SearchBar;
+
