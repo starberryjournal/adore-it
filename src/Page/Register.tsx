@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { account, databases, Query } from "../appwrite";
-import Toast from "../Components/Toast";
 import { useToast } from "../Components/ToastContext";
 import EyeOpen from "../assets/EyeShowSvgrepoCom.svg";
 import EyeClosed from "../assets/EyeHideSvgrepoCom.svg";
@@ -17,7 +16,7 @@ const Register: React.FC = () => {
 
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showConfirmPassword] = useState(false);
   const { showToast } = useToast(); // ✅ this makes showToast usable
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const collectionId = import.meta.env.VITE_USER_PREF_COLLECTION_ID;
