@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "react-quill-new/dist/quill.snow.css";
-import "./EditorPage.css";
+import "./Editorpage.css";
 
 import { account, databases, Query, storage } from "../appwrite"; // make sure path matches your project
 
