@@ -1,25 +1,12 @@
-import { useState } from "react";
 import useNotifications from "../Components/useNotifications";
-import { storage } from "../appwrite"; // Appwrite SDK setup
 import { useNavigate } from "react-router-dom";
-import { formatTimeAgo, formatExactDate } from "../Components/formatDateUtils";
-
-const getProfileImageUrl = (fileId: string) => {
-  return storage.getFilePreview(import.meta.env.VITE_BUCKET_PFPBG, fileId);
-};
-
-const getPostImageUrl = (fileId: string) => {
-  return storage.getFilePreview(import.meta.env.VITE_BUCKET_POST, fileId);
-};
+import { formatTimeAgo } from "../Components/formatDateUtils";
 
 const NotificationsDropdown = () => {
-  const { notifications, loading, hasMore, loadMore, markAsRead } =
-    useNotifications({
-      limit: 10,
-      filter: "all",
-    });
-
-  const unreadCount = notifications.filter((n) => !n.read).length;
+  const { notifications, loading, markAsRead } = useNotifications({
+    limit: 10,
+    filter: "all",
+  });
 
   const navigate = useNavigate();
 
@@ -55,7 +42,7 @@ const NotificationsDropdown = () => {
           )}
 
           {notifications.map((n) => {
-            console.log("ProfilePictureId:", n.actor?.prefs?.profilePictureId); // 👈 LOG HERE
+            console.log("ProfilePictureId:", n.actor?.prefs?.profilePictureId);
 
             return (
               <div
@@ -101,3 +88,4 @@ const NotificationsDropdown = () => {
 };
 
 export default NotificationsDropdown;
+
