@@ -295,7 +295,7 @@ const CollectionImages: React.FC<{
                     <div className="image-pfp">
                       {post.profilePictureId ? (
                         <img
-                          src={`http://localhost:3000/profilePicture/${post.profilePictureId}`}
+                          src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${post.profilePictureId}/view?project=67bc93bc0004228cf938`}
                           alt={`${post.userName}'s profile`}
                         />
                       ) : (
@@ -412,7 +412,7 @@ const CollectionImages: React.FC<{
                   />
                 ) : (
                   <img
-                    src={`http://localhost:3000/image/${post.imageFileId}`}
+                    src={`https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${post.imageFileId}/view?project=67bc93bc0004228cf938`}
                     alt="Post"
                     onClick={() => handleClickImage(post)}
                     className="second-mini-collect"
