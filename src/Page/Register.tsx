@@ -135,6 +135,57 @@ const Register: React.FC = () => {
       setError("Registration failed: " + err.message);
     }
   };
+  const handleGoogleSuccess = async () => {
+    try {
+      // Get the logged-in Appwrite user
+      const user = await account.get();
+
+      // Get the current OAuth session
+      const session = await account.getSession("current");
+
+      // Fetch Google profile info using the access token
+      const googleProfile = await fetch(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        {
+          headers: {
+            Authorization: `Bearer ${session.providerAccessToken}`,
+          },
+        }
+      ).then((res) => res.json());
+
+      const profileImageUrl = googleProfile.picture || defaultProfilePictureId;
+
+      // Create prefs document in your Appwrite database
+      const prefsDocId = "unique()";
+      await databases.createDocument(databaseId, collectionId, prefsDocId, {
+        userId: user.$id,
+        followId: user.$id,
+        userName: user.name,
+        bioId: "",
+        profilePictureId: profileImageUrl, // ✅ use Google image
+        backgroundImageId: defaultBackgroundImageId,
+      });
+
+      // Update Appwrite user prefs
+      await account.updatePrefs({
+        prefsDocId,
+        bioId: "",
+        profilePictureId: profileImageUrl,
+        backgroundImageId: defaultBackgroundImageId,
+      });
+
+      alert("Google user signed in successfully!");
+      navigate("/home", { replace: true });
+      window.location.reload();
+    } catch (err: any) {
+      console.error("Error handling Google OAuth:", err);
+      setError("Google sign-in failed: " + err.message);
+    }
+  };
+
+  useEffect(() => {
+    handleGoogleSuccess();
+  }, []);
 
   useEffect(() => {
     if (name || password || confirmPassword || email) {
