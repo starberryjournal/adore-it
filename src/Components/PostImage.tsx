@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { databases, Query } from "../appwrite";
 import { useNavigate } from "react-router-dom";
 
-import "../Components/TablePage.css";
+import "../components/TablePage.css";
 import FollowUserButton from "./FollowUserButton";
 import { formatDistanceToNow } from "date-fns";
 import { useCurrentUser } from "./useCurrentUser";
@@ -949,7 +949,7 @@ const PopularPictures: React.FC = () => {
                       <div className="image-pfp">
                         {post.profilePictureId ? (
                           <img
-                            src={`http://localhost:3000/profilePicture/${post.profilePictureId}`}
+                            src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${post.profilePictureId}/view?project=67bc93bc0004228cf938`}
                             alt={`${post.userName}'s profile`}
                           />
                         ) : (
@@ -1062,7 +1062,7 @@ const PopularPictures: React.FC = () => {
                     />
                   ) : (
                     <img
-                      src={`http://localhost:3000/image/${post.imageFileId}`}
+                      src={`https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${post.imageFileId}/view?project=67bc93bc0004228cf938`}
                       alt="Post"
                       onClick={() => handleImageClick(post)}
                       className="image-collect"
@@ -1936,7 +1936,7 @@ const Hearters: React.FC = () => {
                       <div className="image-pfp">
                         {post.profilePictureId ? (
                           <img
-                            src={`http://localhost:3000/profilePicture/${post.profilePictureId}`}
+                            src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${post.profilePictureId}/view?project=67bc93bc0004228cf938`}
                             alt={`${post.userName}'s profile`}
                           />
                         ) : (
