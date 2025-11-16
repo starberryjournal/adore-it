@@ -116,7 +116,7 @@ const CollectionImages: React.FC = () => {
       ]);
       if (response.documents.length > 0) {
         const profileData = response.documents[0];
-        const profileImageUrl = `http://localhost:3000/profilePicture/${profileData.profilePictureId}`;
+        const profileImageUrl = `https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${profileData.profilePictureId}/view?project=67bc93bc0004228cf938`;
         setUserProfile(profileImageUrl);
       }
     } catch (error) {
