@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { databases, Query } from "../appwrite";
 import { useNavigate } from "react-router-dom";
 
-import "../components/TablePage.css";
+import "../Components/TablePage.css";
 import FollowUserButton from "./FollowUserButton";
 import { formatDistanceToNow } from "date-fns";
 import { useCurrentUser } from "./useCurrentUser";
