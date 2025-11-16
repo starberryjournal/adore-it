@@ -30,7 +30,6 @@ interface State {
   $id: string;
 }
 
-
 interface Post {
   $id: string;
   imageFileId?: string;
@@ -115,7 +114,7 @@ const PostContent: React.FC = () => {
       setCurrentPost({
         ...doc,
         id: doc.$id,
-        imageSrc: `http://localhost:3000/image/${doc.imageFileId}`,
+        imageSrc: `https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${doc.imageFileId}/view?project=67bc93bc0004228cf938`,
         createdAt: doc.createdAt || doc.$createdAt,
       });
       const postLinks = doc.links;
@@ -143,7 +142,7 @@ const PostContent: React.FC = () => {
         setCurrentPost({
           ...postDoc,
           id: postDoc.$id,
-          imageSrc: `http://localhost:3000/image/${postDoc.imageFileId}`,
+          imageSrc: `https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${postDoc.imageFileId}/view?project=67bc93bc0004228cf938`,
           createdAt: postDoc.createdAt || postDoc.$createdAt,
         });
 
@@ -184,7 +183,7 @@ const PostContent: React.FC = () => {
             })
             .map((doc) => ({
               ...doc,
-              imageSrc: `http://localhost:3000/image/${doc.imageFileId}`,
+              imageSrc: `https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${doc.imageFileId}/view?project=67bc93bc0004228cf938`,
             }));
 
           setRelatedImages(filtered);
@@ -298,7 +297,7 @@ const PostContent: React.FC = () => {
       navigate(`/Post/${post.$id}`, {
         state: {
           ...post,
-          imageSrc: `http://localhost:3000/image/${post.imageFileId}`,
+          imageSrc: `https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${post.imageFileId}/view?project=67bc93bc0004228cf938`,
           id: post.$id,
           tags: post.tags ?? "",
           userName: post.userName,
@@ -344,7 +343,7 @@ const PostContent: React.FC = () => {
                       <div className="profile-picture">
                         {userProfile?.profilePictureId && (
                           <img
-                            src={`http://localhost:3000/profilePicture/${userProfile.profilePictureId}`}
+                            src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${userProfile.profilePictureId}/view?project=67bc93bc0004228cf938`}
                             alt="Profile"
                           />
                         )}
@@ -702,7 +701,7 @@ const PostContent: React.FC = () => {
                         />
                       ) : (
                         <img
-                          src={`http://localhost:3000/image/${post.imageFileId}`}
+                          src={`https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${post.imageFileId}/view?project=67bc93bc0004228cf938`}
                           alt="Post"
                           onClick={() => handleImageClick(post)}
                           className="image-collect"
@@ -721,3 +720,4 @@ const PostContent: React.FC = () => {
 };
 
 export default PostContent;
+
