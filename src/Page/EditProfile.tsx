@@ -121,8 +121,9 @@ const EditProfile: React.FC = () => {
     });
 
     await updateCreatePosts(user.$id, displayName, userName);
-    window.location.reload();
+
     navigate("/Profile");
+    window.location.reload();
   };
 
   const handleSelectFile = (type: "profile" | "background", file: File) => {
