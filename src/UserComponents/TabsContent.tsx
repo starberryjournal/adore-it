@@ -1232,7 +1232,7 @@ const UserFollowing: React.FC = () => {
             <div className="follow-user-profile-picture">
               {user.profilePictureId ? (
                 <img
-                  src={`http://localhost:3000/profilePicture/${user.profilePictureId}`}
+                  src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${user.profilePictureId}/view?project=67bc93bc0004228cf938`}
                   alt={`${user.displayName}'s Profile`}
                   onError={(e) =>
                     (e.currentTarget.src = "/default-profile.jpg")
@@ -1345,7 +1345,7 @@ const UserFollowers: React.FC = () => {
             <div className="follow-user-profile-picture">
               {user.profilePictureId ? (
                 <img
-                  src={`http://localhost:3000/profilePicture/${user.profilePictureId}`}
+                  src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${user.profilePictureId}/view?project=67bc93bc0004228cf938`}
                   alt={`${user.displayName}'s Profile`}
                   onError={(e) =>
                     (e.currentTarget.src = "/default-profile.jpg")
