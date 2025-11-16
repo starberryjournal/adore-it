@@ -644,7 +644,7 @@ const LatestLikedPictures: React.FC = () => {
                     ) : (
                       <div className="dx">
                         <img
-                          src={`http://localhost:3000/image/${post.imageFileId}`}
+                          src={`https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${post.imageFileId}/view?project=67bc93bc0004228cf938`}
                           alt="Post"
                           className="imagess image-collect"
                         />
@@ -1097,7 +1097,7 @@ const UserPosts: React.FC = () => {
                   />
                 ) : (
                   <img
-                    src={`http://localhost:3000/image/${post.imageFileId}`}
+                    src={`https://cloud.appwrite.io/v1/storage/buckets/67be51020004776eea1a/files/${post.imageFileId}/view?project=67bc93bc0004228cf938`}
                     alt="Post"
                     onClick={() => handleImageClick(post)}
                     className="image-collect"
