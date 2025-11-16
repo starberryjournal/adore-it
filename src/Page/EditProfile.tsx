@@ -121,7 +121,7 @@ const EditProfile: React.FC = () => {
     });
 
     await updateCreatePosts(user.$id, displayName, userName);
-
+    window.location.reload();
     navigate("/Profile");
   };
 
@@ -152,7 +152,6 @@ const EditProfile: React.FC = () => {
     setCroppingFile(null);
     setCroppingType(null);
   };
-
 
   return (
     <div className="container2">
@@ -302,4 +301,3 @@ const EditProfile: React.FC = () => {
 };
 
 export default EditProfile;
-
