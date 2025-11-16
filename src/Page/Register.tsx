@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { account, databases, Query } from "../appwrite";
+import { OAuthProvider } from "appwrite";
 import { useToast } from "../Components/ToastContext";
 import EyeOpen from "../assets/EyeShowSvgrepoCom.svg";
 import EyeClosed from "../assets/EyeHideSvgrepoCom.svg";
@@ -17,7 +18,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword] = useState(false);
-  const { showToast } = useToast(); // ✅ this makes showToast usable
+  useToast(); // ✅ this makes showToast usable
   const databaseId = import.meta.env.VITE_DATABASE_ID;
   const collectionId = import.meta.env.VITE_USER_PREF_COLLECTION_ID;
 
@@ -78,8 +79,12 @@ const Register: React.FC = () => {
     return "Weak";
   };
 
-  const handleOAuthLogin = (provider: string) => {
-    showToast(`Social login with ${provider} is coming soon!`, "info");
+  const handleOAuthLogin = (provider: OAuthProvider) => {
+    account.createOAuth2Session(
+      provider,
+      "https://adore-it.vercel.app/Discovery", // success redirect
+      "https://adore-it.vercel.app/Register" // failure redirect
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -268,10 +273,7 @@ const Register: React.FC = () => {
 
             <div className="social-media-logo">
               <div className="inside-social-media">
-                <div
-                  className="facebook"
-                  onClick={() => handleOAuthLogin("Facebook")}
-                >
+                <div className="facebook" onClick={() => handleOAuthLogin}>
                   <img
                     src="/src/assets/SVG/facebook-svgrepo-com.svg"
                     alt="Facebook"
@@ -281,7 +283,7 @@ const Register: React.FC = () => {
                 </div>
                 <div
                   className="google"
-                  onClick={() => handleOAuthLogin("Google")}
+                  onClick={() => handleOAuthLogin("google" as OAuthProvider)}
                 >
                   <img
                     src="/src/assets/SVG/social-google-plus-svgrepo-com.svg"
