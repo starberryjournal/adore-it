@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { account, databases, Query } from "../appwrite";
+import { OAuthProvider } from "appwrite";
 import { useToast } from "../Components/ToastContext";
 import EyeOpen from "../assets/EyeShowSvgrepoCom.svg";
 import EyeClosed from "../assets/EyeHideSvgrepoCom.svg";
 import { uploadGoogleAvatar } from "./useGoogleProfileImage";
+import enveLope from "/src/assets/SVG/envelope-svgrepo-com (1).svg";
+import lockUp from "/src/assets/SVG/lock-svgrepo-com.svg";
+import contactCard from "/src/assets/SVG/contact-card-svgrepo-com.svg";
+
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -79,6 +84,13 @@ const Register: React.FC = () => {
     return "Weak";
   };
 
+  const handleOAuthLogin = (provider: OAuthProvider) => {
+    account.createOAuth2Session(
+      provider,
+      "https://adore-it.vercel.app", // success redirect
+      "https://adore-it.vercel.app/Register" // failure redirect
+    );
+  };
   useEffect(() => {
     const run = async () => {
       try {
@@ -185,6 +197,11 @@ const Register: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="formulation">
               <div className="centre-side2">
+                <img
+                  src={contactCard}
+                  alt="username"
+                  className="mini-svg"
+                />
                 <input
                   type="text"
                   value={name}
@@ -197,6 +214,11 @@ const Register: React.FC = () => {
               </div>
 
               <div className="centre-side2">
+                <img
+                  src={enveLope}
+                  alt="email"
+                  className="mini-svg"
+                />
                 <input
                   type="email"
                   value={email}
@@ -210,6 +232,11 @@ const Register: React.FC = () => {
 
               <div className="middle-center-side">
                 <div className="centre-side2">
+                  <img
+                    src={lockUp}
+                    alt="password"
+                    className="mini-svg"
+                  />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -234,6 +261,11 @@ const Register: React.FC = () => {
 
               <div className="middle-center-side">
                 <div className="centre-side2">
+                  <img
+                    src={lockUp}
+                    alt="password"
+                    className="mini-svg"
+                  />
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
@@ -275,6 +307,27 @@ const Register: React.FC = () => {
                 Strength: {getPasswordStrength(password)}
               </div>
             )}
+
+            <div className="banner-divider">
+              <p>OR</p>
+            </div>
+
+            <div className="social-media-logo">
+              <div className="inside-social-media">
+                <div
+                  className="google"
+                  onClick={() => handleOAuthLogin("google" as OAuthProvider)}
+                >
+                  <img
+                    src="/src/assets/SVG/social-google-plus-svgrepo-com.svg"
+                    alt="Google"
+                    className="social-svg"
+                  />
+                  Sign up with Google
+                </div>
+              </div>
+            </div>
+
             <div className="warning">
               <p>
                 By creating your account you confirm that you've read <br />
@@ -296,4 +349,3 @@ const Register: React.FC = () => {
 };
 
 export default Register;
-
