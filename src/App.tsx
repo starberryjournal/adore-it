@@ -27,6 +27,7 @@ import ForgotPassword from "./Page/ForgotPassword";
 import ToastComponent from "./Components/ToastComponent";
 import EditorPage from "./Page/EditorPage";
 import UserArticles from "./Page/UserArticles";
+import DiscoveryInsign from "./Page/DiscoveryInsign";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -72,6 +73,7 @@ function App() {
         <Route path="/Profile" element={<UserProfile />} />
         <Route path="/User/:userName" element={<Profile />} />
         <Route path="/Discovery" element={<Discovery onLogout={() => {}} />} />
+        <Route path="/DiscoveryIn" element={<DiscoveryInsign />} />
         <Route path="/FindSimilarImages" element={<FindSimilarImages />} />
         <Route path="/CreatePost" element={<CreatePost />} />
         <Route path="/UsersPosts" element={<UsersPosts />} />
