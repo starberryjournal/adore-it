@@ -9,7 +9,7 @@ import { uploadGoogleAvatar } from "./useGoogleProfileImage";
 import enveLope from "/src/assets/SVG/envelope-svgrepo-com (1).svg";
 import lockUp from "/src/assets/SVG/lock-svgrepo-com.svg";
 import contactCard from "/src/assets/SVG/contact-card-svgrepo-com.svg";
-
+import googleIcon from "/src/assets/SVG/social-google-plus-svgrepo-com.svg";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -197,11 +197,7 @@ const Register: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="formulation">
               <div className="centre-side2">
-                <img
-                  src={contactCard}
-                  alt="username"
-                  className="mini-svg"
-                />
+                <img src={contactCard} alt="username" className="mini-svg" />
                 <input
                   type="text"
                   value={name}
@@ -214,11 +210,7 @@ const Register: React.FC = () => {
               </div>
 
               <div className="centre-side2">
-                <img
-                  src={enveLope}
-                  alt="email"
-                  className="mini-svg"
-                />
+                <img src={enveLope} alt="email" className="mini-svg" />
                 <input
                   type="email"
                   value={email}
@@ -232,11 +224,7 @@ const Register: React.FC = () => {
 
               <div className="middle-center-side">
                 <div className="centre-side2">
-                  <img
-                    src={lockUp}
-                    alt="password"
-                    className="mini-svg"
-                  />
+                  <img src={lockUp} alt="password" className="mini-svg" />
                   <input
                     type={showPassword ? "text" : "password"}
                     value={password}
@@ -261,11 +249,7 @@ const Register: React.FC = () => {
 
               <div className="middle-center-side">
                 <div className="centre-side2">
-                  <img
-                    src={lockUp}
-                    alt="password"
-                    className="mini-svg"
-                  />
+                  <img src={lockUp} alt="password" className="mini-svg" />
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
@@ -318,11 +302,7 @@ const Register: React.FC = () => {
                   className="google"
                   onClick={() => handleOAuthLogin("google" as OAuthProvider)}
                 >
-                  <img
-                    src="/src/assets/SVG/social-google-plus-svgrepo-com.svg"
-                    alt="Google"
-                    className="social-svg"
-                  />
+                  <img src={googleIcon} alt="Google" className="social-svg" />
                   Sign up with Google
                 </div>
               </div>
