@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import "./SignInNav.css";
 import SearchBar from "./SearchBar";
+import GridIcon from "/src/assets/SVG/square-4-grid-svgrepo-com.svg";
+import LogoIcon from "/src/assets/SVG/JEKIFFELOGO2.png";
 
 export default function Navbar() {
   return (
@@ -8,7 +10,7 @@ export default function Navbar() {
       <div className="heading">
         <div className="header-left">
           <div className="header-logo">
-            <img src="./src/assets/SVG/logoweheartit.svg" alt="image logo" />
+            <img src={LogoIcon} alt="image logo" />
           </div>
           <div
             className="discovery
@@ -21,10 +23,7 @@ export default function Navbar() {
               }
             >
               <div className="svg">
-                <img
-                  src="./src/assets/SVG/square-4-grid-svgrepo-com.svg"
-                  alt="svg"
-                />
+                <img src={GridIcon} alt="svg" />
                 <p>discovery</p>
               </div>
             </NavLink>
