@@ -200,17 +200,16 @@ export default function SignInNav() {
               New Post
             </button>
           </NavLink>
-          <div className="user-profile">
-            <NavLink to="/Profile">
+          <NavLink to="/Profile">
+            <div className="user-profile">
               {user.prefs.profilePictureId && (
                 <img
                   src={`https://cloud.appwrite.io/v1/storage/buckets/67bcb7d50038b0f4f5ba/files/${user.prefs.profilePictureId}/view?project=67bc93bc0004228cf938`}
                   alt="Profile"
                 />
               )}
-            </NavLink>
-          </div>
-
+            </div>
+          </NavLink>
           <button onClick={handleLogout} className="signt-out">
             Logout
           </button>
@@ -219,4 +218,3 @@ export default function SignInNav() {
     </div>
   );
 }
-
