@@ -15,7 +15,7 @@ export default function Navbar() {
           "
           >
             <NavLink
-              to="/Discovery"
+              to="/DiscoveryIn"
               className={({ isActive }) =>
                 isActive ? "nav-link activee" : "nav-link"
               }
