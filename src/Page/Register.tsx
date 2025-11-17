@@ -194,7 +194,7 @@ const Register: React.FC = () => {
             <form onSubmit={handleSubmit} className="formulation">
               <div className="centre-side2">
                 <img
-                  src="/src/assets/SVG/contact-card-svgrepo-com.svg"
+                  src="/src/assets/SVG/contactcardsvgrepocom.svg"
                   alt="username"
                   className="mini-svg"
                 />
