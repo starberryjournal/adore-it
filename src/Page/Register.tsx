@@ -5,6 +5,7 @@ import { OAuthProvider } from "appwrite";
 import { useToast } from "../Components/ToastContext";
 import EyeOpen from "../assets/EyeShowSvgrepoCom.svg";
 import EyeClosed from "../assets/EyeHideSvgrepoCom.svg";
+import { uploadGoogleAvatar } from "./useGoogleProfileImage";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -135,61 +136,24 @@ const Register: React.FC = () => {
       setError("Registration failed: " + err.message);
     }
   };
+
   useEffect(() => {
-    const handleGoogleSuccess = async () => {
-      try {
-        // 1. Get Appwrite user
-        const user = await account.get();
+    const run = async () => {
+      const fileId = await uploadGoogleAvatar({
+        bucketId: "67bcb7d50038b0f4f5ba",
+        databaseId: databaseId,
+        collectionId: collectionId,
+        defaultBackgroundImageId: defaultBackgroundImageId,
+      });
 
-        // 2. Get current session (must be OAuth)
-        const session = await account.getSession("current");
-
-        if (!session.providerAccessToken) {
-          console.error("No provider access token found.");
-          return;
-        }
-
-        // 3. Fetch Google profile info
-        const googleProfile = await fetch(
-          "https://www.googleapis.com/oauth2/v3/userinfo",
-          {
-            headers: {
-              Authorization: `Bearer ${session.providerAccessToken}`,
-            },
-          }
-        ).then((res) => res.json());
-
-        const profileImageUrl =
-          googleProfile.picture || defaultProfilePictureId;
-
-        // 4. Create prefs document in your DB
-        const prefsDocId = "unique()";
-        await databases.createDocument(databaseId, collectionId, prefsDocId, {
-          userId: user.$id,
-          followId: user.$id,
-          userName: user.name,
-          bioId: "",
-          profilePictureId: profileImageUrl,
-          backgroundImageId: defaultBackgroundImageId,
-        });
-
-        // 5. Update Appwrite user prefs
-        await account.updatePrefs({
-          prefsDocId,
-          bioId: "",
-          profilePictureId: profileImageUrl,
-          backgroundImageId: defaultBackgroundImageId,
-        });
-
+      if (fileId) {
+        console.log("User avatar stored in Appwrite:", fileId);
         navigate("/home", { replace: true });
         window.location.reload();
-      } catch (err: any) {
-        console.error("Google OAuth error:", err);
-        setError("Google sign-in failed: " + err.message);
       }
     };
 
-    handleGoogleSuccess();
+    run();
   }, []);
 
   useEffect(() => {
