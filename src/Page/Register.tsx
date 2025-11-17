@@ -87,6 +87,42 @@ const Register: React.FC = () => {
       "https://adore-it.vercel.app/Register" // failure redirect
     );
   };
+  useEffect(() => {
+    const run = async () => {
+      try {
+        const user = await account.get();
+
+        // Check if user already has a profile picture
+        if (!user.prefs?.profilePictureId) {
+          const fileId = await uploadGoogleAvatar({
+            bucketId: "67bcb7d50038b0f4f5ba",
+            databaseId: databaseId,
+            collectionId: collectionId,
+            defaultBackgroundImageId: defaultBackgroundImageId,
+          });
+
+          // If upload fails, assign default avatar manually
+          const finalAvatarId = fileId || "67bcb7f900374bd0324e";
+
+          await account.updatePrefs({
+            userName: user.name,
+            profilePictureId: finalAvatarId,
+            backgroundImageId: defaultBackgroundImageId,
+            bioId: "",
+          });
+
+          console.log("Avatar assigned:", finalAvatarId);
+        }
+
+        navigate("/home", { replace: true });
+        window.location.reload();
+      } catch (err) {
+        console.error("Error during avatar setup:", err);
+      }
+    };
+
+    run();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -136,25 +172,6 @@ const Register: React.FC = () => {
       setError("Registration failed: " + err.message);
     }
   };
-
-  useEffect(() => {
-    const run = async () => {
-      const fileId = await uploadGoogleAvatar({
-        bucketId: "67bcb7d50038b0f4f5ba",
-        databaseId: databaseId,
-        collectionId: collectionId,
-        defaultBackgroundImageId: defaultBackgroundImageId,
-      });
-
-      if (fileId) {
-        console.log("User avatar stored in Appwrite:", fileId);
-        navigate("/home", { replace: true });
-        window.location.reload();
-      }
-    };
-
-    run();
-  }, []);
 
   useEffect(() => {
     if (name || password || confirmPassword || email) {
