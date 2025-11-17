@@ -3,6 +3,8 @@ import { account } from "../appwrite";
 import { Link, useNavigate } from "react-router-dom";
 import EyeOpen from "../assets/EyeShowSvgrepoCom.svg";
 import EyeClosed from "../assets/EyeHideSvgrepoCom.svg";
+import enveLope from "/src/assets/SVG/envelope-svgrepo-com (1).svg";
+import lockUp from "/src/assets/SVG/lock-svgrepo-com.svg";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -41,7 +43,7 @@ const SignIn: React.FC = () => {
         <div className="inside-SignIn">
           <div className="box-inside-SignIn">
             <div className="header-welcome">
-              <h2>Welcome to Kiffe!</h2>
+              <h2>Welcome to j'ADORE!</h2>
               <p>Sign back in</p>
             </div>
 
@@ -49,7 +51,7 @@ const SignIn: React.FC = () => {
               <form onSubmit={handleSignIn} className="formulation">
                 <div className="centre-side2">
                   <img
-                    src="/src/assets/SVG/envelope-svgrepo-com (1).svg"
+                    src={enveLope}
                     alt="envelope svg"
                     className="mini-svg"
                   />
@@ -66,7 +68,7 @@ const SignIn: React.FC = () => {
                 <div className="middle-center-side">
                   <div className="centre-side2">
                     <img
-                      src="/src/assets/SVG/lock-svgrepo-com.svg"
+                      src={lockUp}
                       alt="password"
                       className="mini-svg"
                     />
@@ -96,7 +98,7 @@ const SignIn: React.FC = () => {
                   <p>
                     By clicking Log In, or continuing with one of the options
                     below, you agree to the Terms of Service and Privacy Policy
-                    of Kiffe!
+                    of ADORE!
                   </p>
                 </div>
 
@@ -111,30 +113,6 @@ const SignIn: React.FC = () => {
                   <Link to="/forgot-password">Forgot your password?</Link>
                 </div>
               </form>
-            </div>
-
-            <div className="banner-divider">
-              <p>OR</p>
-            </div>
-            <div className="social-media-logo">
-              <div className="inside-social-media">
-                <div className="facebook">
-                  <img
-                    src="/src/assets/SVG/facebook-svgrepo-com.svg"
-                    alt="Facebook svg"
-                    className="social-svg"
-                  />
-                  Continue with Facebook
-                </div>
-                <div className="google">
-                  <img
-                    src="/src/assets/SVG/social-google-plus-svgrepo-com.svg"
-                    alt="Google svg"
-                    className="social-svg"
-                  />
-                  Continue with Google
-                </div>
-              </div>
             </div>
 
             <div className="link-under">
