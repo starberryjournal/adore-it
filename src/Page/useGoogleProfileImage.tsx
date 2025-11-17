@@ -4,7 +4,6 @@ export async function uploadGoogleAvatar({
   bucketId,
   databaseId,
   collectionId,
-  defaultBackgroundImageId,
 }: {
   bucketId: string;
   databaseId: string;
@@ -14,7 +13,8 @@ export async function uploadGoogleAvatar({
   try {
     const user = await account.get();
     const session = await account.getSession("current");
-
+    const defaultProfilePictureId = "67bcb7f900374bd0324e";
+    const defaultBackgroundImageId = "67bcb808000adb02953e";
     if (!session.providerAccessToken) return null;
 
     const googleProfile = await fetch(
@@ -47,14 +47,14 @@ export async function uploadGoogleAvatar({
       followId: user.$id,
       userName: user.name,
       bioId: "",
-      profilePictureId: uploaded.$id,
+      profilePictureId: defaultProfilePictureId,
       backgroundImageId: defaultBackgroundImageId,
     });
 
     await account.updatePrefs({
       prefsDocId,
       bioId: "",
-      profilePictureId: uploaded.$id,
+      profilePictureId: defaultProfilePictureId,
       backgroundImageId: defaultBackgroundImageId,
     });
 
