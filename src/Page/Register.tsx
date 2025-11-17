@@ -83,7 +83,7 @@ const Register: React.FC = () => {
   const handleOAuthLogin = (provider: OAuthProvider) => {
     account.createOAuth2Session(
       provider,
-      "https://adore-it.vercel.app", // success redirect
+      "https://adore-it.vercel.app/Discovery", // success redirect
       "https://adore-it.vercel.app/Register" // failure redirect
     );
   };
