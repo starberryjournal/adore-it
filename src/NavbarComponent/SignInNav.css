@@ -161,6 +161,10 @@
     position: relative;
     justify-content: center;
     cursor: pointer;
+    width: 29px;
+    height: 29px;
+    background-color: #9d9d9d;
+    border-radius: 50px;
 }
 
 .user-profile img{
@@ -391,5 +395,3 @@
     gap: 19px;
     align-items: center;
 }
-
-
